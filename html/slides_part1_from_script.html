@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI의 진화: 기계는 생각할 수 있는가? - Phase I</title>
+    <style>
+        @import url('https://fonts.bunny.net/css?family=Lato:400,900|Roboto+Mono:400,700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', 'Avenir Next', 'Avenir', 'Trebuchet MS', 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #455a64;
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 100%);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 8px solid #0288d1;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .slide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .slide.lead {
+            background: linear-gradient(135deg, #0288d1, #0277bd);
+            color: #fff8e1;
+            text-align: center;
+            padding: 100px 40px;
+            border-left: none;
+            border-top: 8px solid #fff8e1;
+        }
+        
+        .slide.lead h1 {
+            color: #fff8e1;
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 {
+            font-size: 2em;
+            color: #0288d1;
+            margin-bottom: 0.8em;
+            line-height: 1.2;
+            font-weight: 900;
+        }
+        
+        h2 {
+            font-size: 1.6em;
+            color: #0288d1;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h3 {
+            font-size: 1.3em;
+            color: #0288d1;
+            margin-top: 1.2em;
+            margin-bottom: 0.5em;
+        }
+        
+        strong {
+            color: #0288d1;
+            font-weight: 700;
+        }
+        
+        p {
+            margin-bottom: 1em;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-bottom: 1em;
+            padding-left: 2em;
+        }
+        
+        li {
+            margin-bottom: 0.4em;
+        }
+        
+        pre {
+            background-color: #455a64;
+            color: #fff8e1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5em 0;
+            font-size: 0.9em;
+            border-left: 4px solid #0288d1;
+        }
+        
+        code {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+            background-color: #e8f4f8;
+            color: #0277bd;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+        
+        pre code {
+            background-color: transparent;
+            color: #fff8e1;
+            padding: 0;
+        }
+        
+        .page-number {
+            text-align: right;
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        .divider {
+            height: 4px;
+            background: linear-gradient(90deg, #0288d1, #81d4fa, #4fc3f7, #81d4fa, #0288d1);
+            margin: 40px 0;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+        
+        .navigation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-button {
+            background: #0288d1;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 2px;
+        }
+        
+        .nav-button:hover {
+            background: #0277bd;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #0288d1, #81d4fa);
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .slide {
+                padding: 30px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .slide.lead {
+                padding: 60px 20px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            .slide.lead h1 {
+                font-size: 2em;
+            }
+            
+            .navigation {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="navigation">
+        <button class="nav-button" onclick="scrollToTop()">↑ Top</button>
+        <button class="nav-button" onclick="scrollToBottom()">↓ End</button>
+    </div>
+
+    <div class="container">
+
+        <!-- Slide 1 -->
+        <div class="slide lead" id="slide-1">
+            <p><h1><strong>AI의 진화: 기계는 생각할 수 있는가?</strong></h1></p>
+
+<p>위데이터랩 인공지능 트렌드 강연</p>
+<p>Phase I: AI의 기원과 진화 (1-28장)</p>
+            
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 2 -->
+        <div class="slide" id="slide-2">
+            <p><h1>1. 강연 개요와 핵심 질문</h1></p>
+<p><strong>"기계는 생각할 수 있는가?" - AI의 출발점이 된 철학적 물음</strong></p>
+
+<p>위데이터랩 인공지능 트렌드 강연에 오신 것을 환영합니다.</p>
+
+<p>오늘 우리는 1950년 앨런 튜링이 던진 이 질문에서 시작하여, 현재 Agentic AI까지의 여정을 탐험합니다. 이 질문은 단순한 철학적 사유를 넘어 인공지능 연구의 근본적 동기가 되었으며, 70년이 지난 지금도 여전히 우리에게 중요한 의미를 던지고 있습니다.</p>
+
+<p>위데이터랩은 DB 모니터링에서 시작하여 RAG/Agent 관찰성, YOLO 결함 탐지, 온프레미스 AI 플랫폼까지 다양한 AI 프로젝트를 수행하며 데이터와 AI로 고객의 가치를 창출하는 기업입니다.</p>
+            <div class="page-number">2 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 3 -->
+        <div class="slide" id="slide-3">
+            <p><h1>2. 튜링의 유산: 지능의 정의와 튜링 테스트</h1></p>
+<p><strong>기계 지능 판별의 첫 번째 이정표</strong></p>
+
+<p>앨런 튜링은 "기계가 생각할 수 있는가?"라는 추상적 질문을 "기계가 인간처럼 대화할 수 있는가?"라는 실험 가능한 형태로 전환했습니다.</p>
+
+<p>튜링 테스트는 다음과 같이 작동합니다:</p>
+<ul>
+<li>심사자가 보이지 않는 상대와 텍스트로 대화</li>
+<li>상대가 인간인지 기계인지 구별할 수 없다면 기계가 '사고'한다고 볼 수 있음</li>
+<li>이는 AI 목표 설정의 첫 번째 구체적인 이정표가 됨</li>
+</ul>
+<p>이 테스트는 완벽하지 않지만, 인공지능이 추구해야 할 방향을 제시했습니다.</p>
+            <div class="page-number">3 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 4 -->
+        <div class="slide" id="slide-4">
+            <p><h1>3. 사이버네틱스: AI의 숨겨진 뿌리 (1948)</h1></p>
+<p><strong>노버트 위너와 제어 시스템의 과학</strong></p>
+
+<p>1948년 MIT의 노버트 위너가 출간한 "Cybernetics: Or Control and Communication in the Animal and the Machine"은 AI의 중요한 지적 토대가 되었습니다.</p>
+
+<p><strong>사이버네틱스의 핵심 개념:</strong></p>
+<p>위너는 생물체와 기계가 모두 정보를 처리하고 피드백을 통해 행동을 조절하는 시스템이라고 보았습니다. 생물학의 항상성(homeostasis) 개념에서 영감을 받아, 시스템이 외부 변화에도 내부 균형을 유지하는 메커니즘을 수학적으로 모델링했습니다.</p>
+
+<p>체온 조절, 혈당 조절 같은 생물학적 항상성과 마찬가지로, 자동 온도 조절기도 목표 온도를 유지하기 위해 지속적으로 피드백을 받아 조정합니다. 이러한 네거티브 피드백 루프가 적응적 행동의 기초이며, 지능의 본질이라고 주장했습니다.</p>
+
+<p><strong>AI에 미친 영향:</strong></p>
+<p>사이버네틱스는 학습을 "시스템이 피드백을 통해 행동을 개선하는 과정"으로 정의했고, 이는 현재 강화학습의 기초가 되었습니다. 또한 인간-기계 상호작용, 적응 시스템, 자기 조직화 같은 개념들이 후에 AI 연구의 중요한 주제가 되었습니다.</p>
+
+<p>위너의 동료였던 클로드 섀넌(정보이론), 워런 맥컬록(인공 뉴런)도 사이버네틱스 운동에 참여했으며, 이들의 아이디어는 다트머스 회의로 이어졌습니다.</p>
+            <div class="page-number">4 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 5 -->
+        <div class="slide" id="slide-5">
+            <p><h1>4. AI의 공식 탄생: 다트머스 회의 (1956)</h1></p>
+<p><strong>'Artificial Intelligence' 용어의 탄생과 야심찬 시작</strong></p>
+
+<p>1956년 여름, 다트머스 대학에서 열린 2개월간의 워크숍이 AI를 정식 학문 분야로 탄생시켰습니다.</p>
+
+<p><strong>주요 참석자와 그들이 AI에 미친 영향:</strong></p>
+<p>존 매카시는 'Artificial Intelligence'라는 용어를 만들고 1958년 LISP를 개발했습니다. LISP는 이후 30년간 AI 연구의 주언어가 되었고, 현재도 Clojure 등으로 명맥을 이어가고 있습니다.</p>
+
+<p>마빈 민스키는 1951년 SNARC로 최초의 신경망을 시뮬레이션했고, 1959년 MIT AI Lab을 공동 설립했습니다. 그의 연구실에서 컴퓨터 비전, 로봇공학, 자연어처리의 기초가 만들어졌습니다.</p>
+
+<p>클로드 섀넌은 1948년 정보이론으로 디지털 통신의 수학적 기초를 제공했고, 1950년 체스 프로그램 논문으로 게임 AI의 시초를 열었습니다.</p>
+
+<p>허버트 사이먼과 앨런 뉴웰은 1956년 Logic Theorist로 Principia Mathematica의 정리 52개 중 38개를 자동 증명했습니다. 이는 기계가 창의적 사고를 할 수 있다는 최초의 실증이었습니다.</p>
+
+<p><strong>초기 목표:</strong></p>
+<p>"모든 학습의 측면이나 지능의 다른 특징들을 정확히 기술할 수 있어서, 기계가 이를 시뮬레이션할 수 있도록 만들 수 있다"</p>
+
+<p>이들은 인간 사고의 원리를 수학과 논리로 완전히 모델링할 수 있다고 믿었습니다.</p>
+            <div class="page-number">5 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 6 -->
+        <div class="slide" id="slide-6">
+            <p><h1>6. 생물학적 영감: 맥컬록-피츠의 인공 뉴런 (1943)</h1></p>
+<p><strong>뇌에서 영감을 받은 최초의 수학적 모델</strong></p>
+
+<p>1943년, 신경생리학자 워런 맥컬록과 수학자 월터 피츠는 뇌의 뉴런을 수학적으로 모델링했습니다.</p>
+
+<p><strong>핵심 아이디어:</strong></p>
+<ul>
+<li>뉴런은 입력의 가중합이 임계값을 넘으면 활성화</li>
+<li>논리 게이트처럼 AND, OR, NOT 연산 구현 가능</li>
+<li>단순한 단위들의 연결로 복잡한 계산 가능</li>
+</ul>
+<p>이 모델은 단순했지만, 생물학적 시스템을 인공적으로 구현할 수 있다는 가능성을 보여준 획기적인 시도였습니다. 현대 딥러닝의 기초가 되는 개념입니다.</p>
+            <div class="page-number">6 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 7 -->
+        <div class="slide" id="slide-7">
+            <p><h1>7. 학습하는 기계의 탄생: 로젠블랫의 퍼셉트론 (1957)</h1></p>
+<p><strong>최초의 학습 알고리즘과 패턴 인식</strong></p>
+
+<p>프랭크 로젠블랫의 퍼셉트론은 "기계가 경험을 통해 학습할 수 있다"는 혁명적 개념을 구현했습니다.</p>
+
+<p><strong>퍼셉트론의 특징:</strong></p>
+<ul>
+<li>입력에 가중치를 곱하고 합산하여 출력 결정</li>
+<li>오류에 따라 가중치를 자동으로 조정</li>
+<li>선형 분리 가능한 패턴 학습 가능</li>
+</ul>
+<p><strong>초기 성공 사례:</strong></p>
+<ul>
+<li>손글씨 숫자 인식</li>
+<li>간단한 도형 분류</li>
+<li>기본적인 패턴 인식 작업</li>
+</ul>
+<p>하지만 XOR 문제 같은 비선형 문제를 해결할 수 없다는 한계가 곧 드러났습니다.</p>
+            <div class="page-number">7 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 8 -->
+        <div class="slide" id="slide-8">
+            <p><h1>8. 두 가지 접근법: 상징주의 vs 연결주의</h1></p>
+<p><strong>AI 발전의 첫 번째 갈림길</strong></p>
+
+<p>초기 AI 연구는 두 가지 근본적으로 다른 접근법으로 나뉘었습니다:</p>
+
+<p><strong>상징주의 (Symbolic AI)의 철학과 구현:</strong></p>
+<p>상징주의는 인간의 사고를 논리 기호의 조작으로 설명할 수 있다는 믿음에서 출발했습니다. 1960년대 Newell과 Simon의 General Problem Solver는 수단-목적 분석(means-ends analysis)으로 문제를 해결했고, 이는 현재 AI 계획(planning) 알고리즘의 기초가 되었습니다.</p>
+
+<p>대표적 성공 사례는 1970-80년대 전문가 시스템입니다. MYCIN은 혈액 감염 진단에서 전문의 수준의 정확도를 보였고, DENDRAL은 질량 분석 데이터로 분자 구조를 추론했습니다. 그러나 지식 획득의 병목(knowledge acquisition bottleneck)과 조합 폭발 문제로 한계에 봉착했습니다.</p>
+
+<p><strong>연결주의 (Connectionist AI)의 생물학적 영감:</strong></p>
+<p>연결주의는 뇌의 1000억 개 뉴런이 시냅스로 연결된 구조에서 지능이 창발한다고 봅니다. 1986년 역전파 알고리즘의 재발견으로 다층 신경망 학습이 가능해졌고, 1989년 LeCun의 LeNet은 우편번호 인식에서 99% 정확도를 달성했습니다.</p>
+
+<p>핵심은 명시적 규칙 없이도 데이터에서 패턴을 학습한다는 점입니다. XOR 문제 해결, 음성 인식, 이미지 분류 등에서 성공을 거두며 현재 딥러닝의 토대가 되었습니다.</p>
+
+<p>이 두 접근법의 경쟁과 융합이 AI 발전의 원동력이 되었습니다.</p>
+            <div class="page-number">8 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 9 -->
+        <div class="slide" id="slide-9">
+            <p><h1>9. 뉴로심볼릭 AI: 특정 문제를 위한 보완적 접근 (2020년대)</h1></p>
+<p><strong>신경망의 한계를 극복하기 위한 하이브리드 시도</strong></p>
+
+<p>2020년대 들어 뉴로심볼릭 AI가 특정 영역에서 실험되고 있습니다. 이는 주류 기술이라기보다는 신경망이 어려워하는 특정 문제들을 해결하기 위한 보완적 접근입니다.</p>
+
+<p><strong>뉴로심볼릭 접근법의 특징:</strong></p>
+<p>딥러닝이 패턴 인식과 특징 추출을 담당하고, 심볼릭 시스템이 논리적 추론과 설명 가능성을 제공합니다. 예를 들어, DeepMind의 AlphaGeometry는 신경망으로 기하학적 패턴을 학습하고 심볼릭 추론기로 정리를 증명하여, 국제수학올림피아드 기하 문제의 30문제 중 25문제를 해결했습니다.</p>
+
+<p><strong>실제 구현 사례:</strong></p>
+<p>IBM의 Neuro-Symbolic Concept Learner는 이미지 캡셔닝에서 98.9% 정확도를 달성하면서도 "왜 이 물체가 고양이인가?"같은 질문에 논리적으로 답할 수 있습니다. MIT의 연구진은 프로그램 합성(program synthesis)을 통해 신경망이 학습한 것을 실행 가능한 코드로 변환하는 기술을 개발했습니다.</p>
+
+<p><strong>Lean과 형식 증명의 혁명:</strong></p>
+<p>2024년 Google DeepMind의 AlphaProof는 Lean 정리 증명 보조기를 사용해 국제수학올림피아드 은메달 수준의 문제를 해결했습니다. Lean 4의 210,000개 이상의 형식화된 정리와 100,000개의 정의는 AI가 수학적 추론을 학습하는 데이터베이스가 되었습니다. 특히 DeepSeek-Prover는 miniF2F 벤치마크에서 46.3% 정확도로 GPT-4의 23%를 크게 앞섰습니다.</p>
+
+<p><strong>Knowledge Graph와 추론의 결합:</strong></p>
+<p>Knowledge Graph는 뉴로심볼릭 AI의 핵심 인프라로 부상했습니다. Google의 지식 그래프는 5000억 개 이상의 팩트를 포함하고 있으며, 이를 신경망과 결합해 복잡한 다단계 추론이 가능해졌습니다. AllegroGraph같은 플랫폼은 RDF, 벡터, JSON을 통합 관리하며 SPARQL 쿼리와 LLM을 연결합니다. 의료 분야에서는 질병 경로 분석과 신약 개발에서 뛰어난 성과를 보이고 있습니다.</p>
+
+<p><strong>실용적 적용과 한계:</strong></p>
+<p>뉴로심볼릭 접근은 주로 수학 증명, 프로그램 합성, 형식 검증 같은 논리적 추론이 필수인 영역에서 유용합니다. 하지만 대부분의 AI 응용에서는 순수 신경망 접근이 더 효과적이고 실용적입니다.</p>
+
+<p>현재 대부분의 상업적 AI 시스템(GPT, Claude, Gemini)은 여전히 순수 신경망 기반입니다. 뉴로심볼릭 기법은 특정 도메인에서 성능을 개선하는 도구로 활용되지만, AI 발전의 주류는 아닙니다. 오히려 대규모 신경망의 창발적 능력이 많은 추론 문제를 해결하고 있습니다.</p>
+            <div class="page-number">9 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 10 -->
+        <div class="slide" id="slide-10">
+            <p><h1>10. 기계와의 첫 대화: ELIZA (1966)</h1></p>
+<p><strong>자연어처리의 시작과 사회적 충격</strong></p>
+
+<p>조셉 바이젠바움이 개발한 ELIZA는 최초로 인간과 자연스러운 대화를 나누는 것처럼 보이는 프로그램이었습니다.</p>
+
+<p><strong>ELIZA의 작동 방식:</strong></p>
+<ul>
+<li>단순한 패턴 매칭과 규칙 기반 응답</li>
+<li>심리치료사 역할을 하는 DOCTOR 스크립트</li>
+<li>사용자의 말을 재구성하여 질문으로 되돌림</li>
+</ul>
+<p><strong>예시 대화:</strong></p>
+<p><pre><code>사용자: "저는 우울해요"</p>
+<p>ELIZA: "왜 우울하다고 생각하시나요?"</p>
+<p>사용자: "아무도 저를 이해하지 못해요"</p>
+<p>ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀해 주세요"</code></pre></p>
+
+<p>놀랍게도 많은 사용자들이 ELIZA와 감정적 유대감을 느꼈습니다. 이는 인간이 기계에게도 의인화된 속성을 부여한다는 중요한 통찰을 제공했습니다.</p>
+            <div class="page-number">10 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 11 -->
+        <div class="slide" id="slide-11">
+            <p><h1>11. 전문가 시스템의 황금기 (1970-80년대)</h1></p>
+<p><strong>상업적 성공과 확장성의 한계</strong></p>
+
+<p>전문가 시스템은 인간 전문가의 지식을 규칙 형태로 저장하여 문제를 해결하는 AI의 첫 상업적 성공 사례였습니다.</p>
+
+<p><strong>주요 시스템들:</strong></p>
+<ul>
+<li>MYCIN: 혈액 감염 진단 (정확도 69%, 전문의 평균 65%)</li>
+<li>DENDRAL: 화학 구조 분석</li>
+<li>XCON: 컴퓨터 시스템 구성 (DEC사 연간 4천만 달러 절감)</li>
+</ul>
+<p><strong>한계점:</strong></p>
+<ul>
+<li>지식 획득의 병목 현상 (Knowledge Acquisition Bottleneck)</li>
+<li>규칙이 늘어날수록 복잡도 폭증</li>
+<li>새로운 상황에 대한 적응력 부족</li>
+<li>유지보수의 어려움</li>
+</ul>
+<p>전문가 시스템은 특정 영역에서는 성공했지만, 범용 지능으로의 확장은 실패했습니다.</p>
+            <div class="page-number">11 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 12 -->
+        <div class="slide" id="slide-12">
+            <p><h1>12. 첫 번째 AI 겨울 (1974-1980): 구체적인 숫자로 본 연구 중단</h1></p>
+<p><strong>DARPA 자금 삭감과 Perceptrons의 영향</strong></p>
+
+<p>1969년 Mansfield Amendment 통과로 DARPA는 "기초 연구"가 아닌 "임무 지향적 연구"만 지원하게 되었습니다. 1974년 Carnegie Mellon의 음성 인식 프로젝트가 실패하자 DARPA는 연간 300만 달러 계약을 취소했습니다.</p>
+
+<p><strong>XOR 문제의 기술적 의미:</strong></p>
+<p><pre><code>입력1  입력2  출력</p>
+<p>0      0     0</p>
+<p>0      1     1</p>
+<p>1      0     1</p>
+<p>1      1     0</code></pre></p>
+
+<p>단층 퍼셉트론은 선형 분리 가능한 문제만 해결 가능했습니다. XOR은 비선형 문제로, 최소 2층 이상의 네트워크가 필요했으나 당시에는 다층 네트워크 학습법이 없었습니다.</p>
+
+<p><strong>구체적 영향:</strong></p>
+<ul>
+<li>1973년 영국 Lighthill Report: AI 연구 "과대 약속, 과소 성과" 비판</li>
+<li>MIT AI Lab 예산: 1970년 300만 달러 → 1975년 100만 달러 (67% 감소)</li>
+<li>신경망 연구 논문: 1970년대 연평균 5편 미만으로 급감</li>
+</ul>
+            <div class="page-number">12 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 13 -->
+        <div class="slide" id="slide-13">
+            <p><h1>13. 역전파 알고리즘의 재발견 (1986)</h1></p>
+<p><strong>다층 신경망 학습의 돌파구</strong></p>
+
+<p>1986년, 제프리 힌튼, 데이비드 럼멜하트, 로널드 윌리엄스가 역전파(Backpropagation) 알고리즘을 재발견하고 대중화했습니다.</p>
+
+<p><strong>역전파의 핵심:</strong></p>
+<ul>
+<li>출력층의 오류를 입력층까지 역으로 전파</li>
+<li>각 층의 가중치를 체계적으로 조정</li>
+<li>다층 신경망의 효율적 학습 가능</li>
+</ul>
+<p><strong>XOR 문제 해결:</strong></p>
+<ul>
+<li>은닉층을 추가한 2층 신경망으로 XOR 학습 성공</li>
+<li>비선형 활성화 함수 사용</li>
+<li>복잡한 패턴 학습의 가능성 입증</li>
+</ul>
+<p>이로써 신경망 연구가 다시 활발해지며 AI의 두 번째 물결이 시작되었습니다.</p>
+            <div class="page-number">13 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 14 -->
+        <div class="slide" id="slide-14">
+            <p><h1>14. 신경망 아키텍처의 다양화</h1></p>
+<p><strong>문제에 최적화된 구조의 탄생</strong></p>
+
+<p>역전파 알고리즘 이후, 다양한 신경망 구조가 개발되어 특정 문제를 효과적으로 해결했습니다.</p>
+
+<p><strong>주요 아키텍처들:</strong></p>
+
+<p><strong>RNN (Recurrent Neural Network):</strong></p>
+<ul>
+<li>시계열 데이터와 순차적 정보 처리</li>
+<li>이전 상태를 기억하는 피드백 연결</li>
+<li>음성 인식, 언어 모델링에 활용</li>
+</ul>
+<p><strong>CNN (Convolutional Neural Network):</strong></p>
+<ul>
+<li>이미지의 공간적 특징 추출</li>
+<li>컨볼루션과 풀링 연산</li>
+<li>LeNet-5로 손글씨 인식 실용화 (1998)</li>
+</ul>
+<p><strong>LSTM (Long Short-Term Memory):</strong></p>
+<ul>
+<li>RNN의 장기 의존성 문제 해결</li>
+<li>게이트 메커니즘으로 정보 선택적 기억</li>
+<li>기계 번역, 음성 인식의 핵심 기술</li>
+</ul>
+            <div class="page-number">14 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 15 -->
+        <div class="slide" id="slide-15">
+            <p><h1>15. 생물학적 영감: 네오코그니트론 (1980)</h1></p>
+<p><strong>시각 피질을 모방한 계층적 특징 추출</strong></p>
+
+<p>쿠니히코 후쿠시마의 네오코그니트론은 고양이 시각 피질 연구에서 영감을 받아 개발되었습니다.</p>
+
+<p><strong>혁신적 개념:</strong></p>
+<ul>
+<li>S-cells: 특징 검출 (엣지, 코너 등)</li>
+<li>C-cells: 위치 불변성 구현</li>
+<li>계층적 특징 추출 구조</li>
+<li>변형에 강건한 패턴 인식</li>
+</ul>
+<p>네오코그니트론은 현대 CNN의 개념적 토대가 되었으며, 생물학적 시스템이 AI 발전에 중요한 영감을 제공한다는 것을 보여줬습니다.</p>
+            <div class="page-number">15 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 16 -->
+        <div class="slide" id="slide-16">
+            <p><h1>16. 비지도 학습의 돌파구: RBM과 딥 빌리프 네트워크</h1></p>
+<p><strong>레이블 없는 데이터에서 특징 학습</strong></p>
+
+<p>2006년, 제프리 힌튼은 제한된 볼츠만 머신(RBM)을 이용한 딥 빌리프 네트워크로 딥러닝의 가능성을 보여줬습니다.</p>
+
+<p><strong>RBM의 특징:</strong></p>
+<ul>
+<li>확률적 생성 모델</li>
+<li>비지도 학습으로 특징 추출</li>
+<li>층별 사전학습(Layer-wise Pre-training)</li>
+</ul>
+<p><strong>딥러닝 사전학습의 의미:</strong></p>
+<ul>
+<li>깊은 신경망의 효과적 초기화</li>
+<li>레이블이 없는 대량 데이터 활용</li>
+<li>Vanishing Gradient 문제 완화</li>
+</ul>
+<p>이는 빅데이터 시대에 레이블 없는 데이터를 활용할 수 있는 길을 열었습니다.</p>
+            <div class="page-number">16 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 17 -->
+        <div class="slide" id="slide-17">
+            <p><h1>17. 기계학습의 실용화: SVM과 앙상블 방법</h1></p>
+<p><strong>이론과 실무의 균형</strong></p>
+
+<p>1990년대, 서포트 벡터 머신(SVM)과 앙상블 학습이 실제 문제 해결에서 뛰어난 성능을 보였습니다.</p>
+
+<p><strong>SVM의 강점:</strong></p>
+<ul>
+<li>수학적으로 명확한 최적화 목표</li>
+<li>커널 트릭으로 비선형 문제 해결</li>
+<li>과적합에 강건한 성능</li>
+</ul>
+<p><strong>앙상블 방법:</strong></p>
+<ul>
+<li>Random Forest: 다수의 결정 트리 조합</li>
+<li>AdaBoost: 약한 학습기를 순차적으로 강화</li>
+<li>Gradient Boosting: 잔차 학습으로 성능 개선</li>
+</ul>
+<p>이 시기의 기계학습은 "검은 상자"가 아닌 해석 가능하고 신뢰할 수 있는 모델을 추구했습니다.</p>
+            <div class="page-number">17 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 18 -->
+        <div class="slide" id="slide-18">
+            <p><h1>18. 데이터 시각화와 차원 축소</h1></p>
+<p><strong>고차원 데이터의 직관적 이해</strong></p>
+
+<p>복잡한 고차원 데이터를 이해하기 위한 시각화 기술이 발전했습니다.</p>
+
+<p><strong>주요 기법들:</strong></p>
+<ul>
+<li>PCA (주성분 분석): 선형 차원 축소</li>
+<li>t-SNE: 비선형 매니폴드 학습</li>
+<li>UMAP: 전역 구조 보존 시각화</li>
+</ul>
+<p><strong>활용 사례:</strong></p>
+<ul>
+<li>단어 임베딩 공간 시각화</li>
+<li>이미지 특징 공간 탐색</li>
+<li>클러스터링 결과 검증</li>
+</ul>
+<p>이러한 도구들은 AI 모델의 내부 작동을 이해하고 디버깅하는 데 필수적이 되었습니다.</p>
+            <div class="page-number">18 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 19 -->
+        <div class="slide" id="slide-19">
+            <p><h1>19. 디지털 혁명과 데이터의 폭발적 증가</h1></p>
+<p><strong>AI 발전의 연료가 된 빅데이터</strong></p>
+
+<p>2000년대 들어 인터넷과 모바일 기기의 보급으로 데이터가 기하급수적으로 증가했습니다.</p>
+
+<p><strong>데이터 증가의 주요 원인:</strong></p>
+<ul>
+<li>소셜 미디어: 일일 수십억 개의 게시물</li>
+<li>스마트폰: 센서 데이터와 사용자 행동 기록</li>
+<li>IoT 기기: 실시간 환경 데이터 수집</li>
+<li>디지털 상거래: 구매 패턴과 선호도 데이터</li>
+</ul>
+<p><strong>데이터의 새로운 특성:</strong></p>
+<ul>
+<li>Volume: 페타바이트 규모의 데이터</li>
+<li>Velocity: 실시간 스트리밍 데이터</li>
+<li>Variety: 텍스트, 이미지, 비디오, 센서 데이터</li>
+</ul>
+<p>이 빅데이터는 딥러닝이 그 잠재력을 발휘할 수 있는 토양이 되었습니다.</p>
+            <div class="page-number">19 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 20 -->
+        <div class="slide" id="slide-20">
+            <p><h1>20. ImageNet: AI 발전의 촉매제</h1></p>
+<p><strong>대규모 데이터셋과 경쟁의 생태계</strong></p>
+
+<p>2009년 시작된 ImageNet 프로젝트는 AI 연구 방식을 근본적으로 바꿨습니다.</p>
+
+<p><strong>ImageNet의 규모:</strong></p>
+<ul>
+<li>1,400만 개 이상의 이미지</li>
+<li>2만 개 이상의 카테고리</li>
+<li>각 이미지는 수작업으로 레이블링</li>
+</ul>
+<p><strong>ILSVRC 대회의 영향:</strong></p>
+<ul>
+<li>표준화된 벤치마크 제공</li>
+<li>공정한 모델 비교 가능</li>
+<li>연구 커뮤니티의 건전한 경쟁</li>
+<li>매년 획기적인 성능 향상</li>
+</ul>
+<p>ImageNet은 "더 많은 데이터와 더 큰 모델"이 더 나은 성능으로 이어진다는 것을 실증적으로 보여줬습니다.</p>
+            <div class="page-number">20 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 21 -->
+        <div class="slide" id="slide-21">
+            <p><h1>21. GPU 컴퓨팅: 딥러닝의 하드웨어 혁명</h1></p>
+<p><strong>병렬 처리가 가져온 가능성</strong></p>
+
+<p>그래픽 처리를 위해 설계된 GPU가 딥러닝의 핵심 하드웨어가 되었습니다.</p>
+
+<p><strong>GPU가 딥러닝에 적합한 이유:</strong></p>
+<ul>
+<li>수천 개의 코어로 대규모 병렬 처리</li>
+<li>행렬 연산에 최적화된 구조</li>
+<li>CPU 대비 10-100배 빠른 학습 속도</li>
+</ul>
+<p><strong>CUDA와 cuDNN:</strong></p>
+<ul>
+<li>NVIDIA의 병렬 컴퓨팅 플랫폼</li>
+<li>딥러닝 연산 최적화 라이브러리</li>
+<li>연구자들이 쉽게 GPU를 활용 가능</li>
+</ul>
+<p>GPU의 도입으로 몇 주 걸리던 학습이 며칠로, 며칠 걸리던 것이 몇 시간으로 단축되었습니다.</p>
+            <div class="page-number">21 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 22 -->
+        <div class="slide" id="slide-22">
+            <p><h1>22. AlexNet의 충격 (2012)</h1></p>
+<p><strong>딥러닝 시대의 공식적인 시작</strong></p>
+
+<p>2012년 ImageNet 대회에서 AlexNet이 보여준 성능은 AI 역사의 전환점이 되었습니다.</p>
+
+<p><strong>AlexNet의 혁신:</strong></p>
+<ul>
+<li>8층의 깊은 CNN 구조</li>
+<li>GPU를 활용한 대규모 학습</li>
+<li>ReLU 활성화 함수 사용</li>
+<li>Dropout으로 과적합 방지</li>
+</ul>
+<p><strong>압도적인 성능:</strong></p>
+<ul>
+<li>Top-5 오류율 15.3% (2위는 26.2%)</li>
+<li>이전 최고 기록 대비 10% 이상 개선</li>
+<li>딥러닝의 우월성을 명확히 입증</li>
+</ul>
+<p>이 순간부터 딥러닝은 컴퓨터 비전뿐만 아니라 AI 전반의 주류 기술이 되었습니다.</p>
+            <div class="page-number">22 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 23 -->
+        <div class="slide" id="slide-23">
+            <p><h1>23. 구글의 고양이: 비지도 학습의 가능성</h1></p>
+<p><strong>레이블 없이 개념을 발견하는 AI</strong></p>
+
+<p>2012년, 구글 브레인 팀은 1만 6천 개의 CPU 코어를 사용해 유튜브 영상에서 고양이를 스스로 인식하는 AI를 개발했습니다.</p>
+
+<p><strong>실험의 의미:</strong></p>
+<ul>
+<li>1천만 개의 유튜브 썸네일 학습</li>
+<li>레이블 없이 자동으로 특징 추출</li>
+<li>"고양이 뉴런"의 자발적 형성</li>
+</ul>
+<p><strong>핵심 통찰:</strong></p>
+<ul>
+<li>AI가 스스로 개념을 형성할 수 있음</li>
+<li>대규모 비지도 학습의 잠재력</li>
+<li>인간의 개입 없는 지식 발견</li>
+</ul>
+<p>이는 AI가 단순한 패턴 매칭을 넘어 추상적 개념을 학습할 수 있다는 가능성을 보여줬습니다.</p>
+            <div class="page-number">23 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 24 -->
+        <div class="slide" id="slide-24">
+            <p><h1>24. 더 깊게, 더 크게: 신경망 구조의 진화</h1></p>
+<p><strong>깊이와 크기의 경쟁</strong></p>
+
+<p>AlexNet 이후 신경망은 계속해서 깊어지고 커졌습니다.</p>
+
+<p><strong>주요 발전:</strong></p>
+<ul>
+<li>VGGNet (2014): 19층, 균일한 3x3 컨볼루션</li>
+<li>GoogLeNet (2014): 22층, Inception 모듈</li>
+<li>ResNet (2015): 152층, Skip Connection으로 깊이 혁명</li>
+</ul>
+<p><strong>깊이의 효과:</strong></p>
+<ul>
+<li>더 복잡한 특징 학습 가능</li>
+<li>계층적 표현 학습</li>
+<li>성능의 지속적 향상</li>
+</ul>
+<p>하지만 단순히 크기만 늘리는 것이 능사는 아니었습니다. 효율적인 구조와 학습 방법이 함께 발전해야 했습니다.</p>
+            <div class="page-number">24 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 25 -->
+        <div class="slide" id="slide-25">
+            <p><h1>25. Transfer Learning: 지식의 재활용</h1></p>
+<p><strong>한 번 배운 것을 다른 곳에 활용</strong></p>
+
+<p>전이학습(Transfer Learning)은 딥러닝을 실용적으로 만든 핵심 기술입니다.</p>
+
+<p><strong>개념:</strong></p>
+<ul>
+<li>ImageNet으로 사전학습된 모델 활용</li>
+<li>새로운 작업에 맞게 미세조정(Fine-tuning)</li>
+<li>적은 데이터로도 높은 성능 달성</li>
+</ul>
+<p><strong>장점:</strong></p>
+<ul>
+<li>학습 시간과 비용 대폭 절감</li>
+<li>작은 데이터셋에서도 효과적</li>
+<li>일반적 특징을 특수한 문제에 적용</li>
+</ul>
+<p>전이학습은 "바퀴를 다시 발명하지 말라"는 원칙을 AI에 적용한 것입니다.</p>
+            <div class="page-number">25 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 26 -->
+        <div class="slide" id="slide-26">
+            <p><h1>26. 일상 속 AI의 침투 (2010년대)</h1></p>
+<p><strong>우리가 인식하지 못하는 AI의 확산</strong></p>
+
+<p>2010년대 중반, AI는 이미 우리 일상 곳곳에 스며들어 있었습니다.</p>
+
+<p><strong>숨은 AI 응용들:</strong></p>
+<ul>
+<li>이메일 스팸 필터: 머신러닝 기반 분류</li>
+<li>구글 포토 얼굴 인식: 자동 앨범 구성</li>
+<li>신용카드 사기 탐지: 이상 패턴 감지</li>
+<li>추천 시스템: 넷플릭스, 유튜브, 아마존</li>
+<li>음성 인식: Siri, Google Assistant</li>
+<li>번역 서비스: 신경망 기계 번역</li>
+</ul>
+<p><strong>특징:</strong></p>
+<ul>
+<li>사용자는 AI 존재를 의식하지 못함</li>
+<li>자연스럽게 서비스에 통합</li>
+<li>지속적인 성능 개선</li>
+</ul>
+<p>AI는 더 이상 미래 기술이 아닌 현재의 일상이 되었습니다.</p>
+            <div class="page-number">26 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 27 -->
+        <div class="slide" id="slide-27">
+            <p><h1>27. 컴퓨터 비전의 실용화</h1></p>
+<p><strong>이미지 인식이 가져온 변화</strong></p>
+
+<p>딥러닝은 컴퓨터 비전을 실험실에서 현실로 끌어냈습니다.</p>
+
+<p><strong>주요 응용 분야:</strong></p>
+<ul>
+<li>의료 영상 진단: 암 조기 발견</li>
+<li>자율주행: 도로 상황 인식</li>
+<li>보안: 얼굴 인식 출입 통제</li>
+<li>농업: 드론을 이용한 작물 상태 분석</li>
+<li>제조업: 품질 검사 자동화</li>
+</ul>
+<p><strong>기술적 발전:</strong></p>
+<ul>
+<li>객체 검출: YOLO, R-CNN</li>
+<li>이미지 분할: U-Net, Mask R-CNN</li>
+<li>3D 비전: 깊이 추정, 3D 재구성</li>
+</ul>
+<p>컴퓨터 비전은 AI가 "볼 수 있는 눈"을 갖게 된 것을 의미합니다.</p>
+            <div class="page-number">27 / 28</div>
+        </div>
+        
+        <div class="divider"></div>
+
+        <!-- Slide 28 -->
+        <div class="slide" id="slide-28">
+            <p><h1>28. Phase I 총정리: 철학에서 실용으로</h1></p>
+<p><strong>70년 AI 발전의 첫 번째 장</strong></p>
+
+<p>우리는 튜링의 철학적 질문에서 시작하여 일상 속 AI까지의 여정을 살펴봤습니다.</p>
+
+<p><strong>주요 전환점들:</strong></p>
+<ol>
+<li>1950년대: 철학적 질문과 이론적 토대</li>
+<li>1960-70년대: 초기 성공과 첫 번째 좌절</li>
+<li>1980년대: 신경망의 부활과 새로운 가능성</li>
+<li>1990-2000년대: 실용적 기계학습의 발전</li>
+<li>2010년대: 빅데이터와 GPU가 만든 딥러닝 혁명</li>
+</ol>
+<p><strong>핵심 통찰:</strong></p>
+<ul>
+<li>AI는 실패와 부활을 반복하며 발전</li>
+<li>이론, 데이터, 하드웨어의 융합이 혁신 창출</li>
+<li>생물학적 영감이 기술적 돌파구 제공</li>
+<li>실용성이 연구의 지속가능성 결정</li>
+</ul>
+<p>이제 우리는 자연어처리 혁명과 LLM 시대로 들어갈 준비가 되었습니다. Phase II에서는 AI가 어떻게 인간의 언어를 이해하고, 생성하며, 더 나아가 스스로 행동하는 에이전트가 되었는지 탐구하겠습니다.</p>
+            <div class="page-number">28 / 28</div>
+        </div>
+        
+        <div style="height: 100px;"></div>
+    </div>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        // 스크롤 진행률 표시
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+    </script>
+</body>
+</html>
