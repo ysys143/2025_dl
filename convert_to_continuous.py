@@ -1,46 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Marp Markdown to Continuous Scroll HTML Converter
+Marp Markdown to Continuous Scroll HTML Converter (v4)
 마크다운 슬라이드를 연속 스크롤 HTML로 변환하는 스크립트
 
-애플 스타일의 세련된 그레이 톤 디자인으로 마크다운 슬라이드를 
-연속 스크롤 가능한 HTML 페이지로 변환합니다.
+markdown2와 pygments를 사용하여 코드 하이라이팅을 포함한 
+고품질 마크다운 렌더링을 제공하며, YouTube 임베딩과 링크 자동 변환을 지원합니다.
+
+필요한 라이브러리 설치:
+    pip install markdown2 pygments
 
 사용법:
     단일 파일 변환:
-        python convert_to_continuous.py <input_markdown_file> [output_html_file]
+        python convert_to_continuous_v4.py <input_markdown_file> [output_html_file]
         
     폴더 일괄 변환:
-        python convert_to_continuous.py <input_directory> [output_directory]
-
-예시:
-    # 단일 파일 변환 (자동 출력 파일명)
-    python convert_to_continuous.py slides_part1_reorganized.md
-    
-    # 단일 파일 변환 (출력 파일명 지정)
-    python convert_to_continuous.py slides_part1_reorganized.md my_slides.html
-    
-    # 폴더 내 모든 .md 파일 변환 (html_output 폴더에 저장)
-    python convert_to_continuous.py marp_md/
-    
-    # 폴더 내 모든 .md 파일 변환 (지정된 출력 폴더에 저장)
-    python convert_to_continuous.py marp_md/ html/
+        python convert_to_continuous_v4.py <input_directory> [output_directory]
 
 기능:
-    - Marp 마크다운 파싱 및 HTML 변환
-    - 애플 스타일 미니멀 디자인
-    - 연속 스크롤 레이아웃
-    - 스크롤 스파이 네비게이션
-    - 진행률 표시바
+    - YouTube 링크 자동 임베딩
+    - URL 자동 하이퍼링크 변환
+    - 마크다운 링크 문법 지원
+    - 코드 하이라이팅 (Pygments)
     - 반응형 디자인
-    - 유리 morphism 효과
-    - 부드러운 애니메이션
-
-출력:
-    - 변환된 HTML 파일들은 완전히 독립적으로 실행 가능
-    - 외부 CDN을 통한 폰트 로딩 (Inter, JetBrains Mono)
-    - 모든 스타일이 인라인으로 포함됨
 """
 
 import re
@@ -48,6 +30,25 @@ import os
 import sys
 from pathlib import Path
 import glob
+from urllib.parse import urlparse, parse_qs
+
+try:
+    import markdown2
+except ImportError:
+    print("Error: markdown2 library is required. Please install it using:")
+    print("pip install markdown2")
+    sys.exit(1)
+
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name, guess_lexer, TextLexer
+    from pygments.formatters import HtmlFormatter
+    from pygments.styles import get_style_by_name
+    PYGMENTS_AVAILABLE = True
+except ImportError:
+    print("Warning: pygments library not found. Code highlighting will be disabled.")
+    print("Install it using: pip install pygments")
+    PYGMENTS_AVAILABLE = False
 
 def parse_marp_markdown(content):
     """마크다운 내용을 파싱하여 슬라이드들을 추출"""
@@ -104,92 +105,407 @@ def parse_marp_markdown(content):
     
     return slides
 
-def markdown_to_html(text):
-    """마크다운을 HTML로 변환"""
-    # 코드 블록 처리 (가장 먼저 처리)
-    def replace_code_block(match):
-        code_content = match.group(1)
-        # HTML 엔티티 이스케이프
-        code_content = code_content.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-        return f'<pre><code>{code_content}</code></pre>'
+def extract_youtube_id(url):
+    """YouTube URL에서 비디오 ID 추출"""
+    parsed_url = urlparse(url)
     
-    # 모든 코드블럭을 한 번에 처리 (언어 지정 여부 무관)
-    text = re.sub(r'```(?:\w+)?\n(.*?)\n```', replace_code_block, text, flags=re.DOTALL)
+    # youtu.be 형식
+    if parsed_url.hostname in ['youtu.be', 'www.youtu.be']:
+        return parsed_url.path[1:]
     
-    # 인라인 코드
-    text = re.sub(r'`([^`\n]+)`', r'<code>\1</code>', text)
+    # youtube.com 형식
+    if parsed_url.hostname in ['youtube.com', 'www.youtube.com']:
+        if parsed_url.path == '/watch':
+            query_params = parse_qs(parsed_url.query)
+            return query_params.get('v', [None])[0]
+        elif parsed_url.path.startswith('/embed/'):
+            return parsed_url.path.split('/')[2]
     
-    # 제목 변환
-    text = re.sub(r'^# (.+)$', r'<h1>\1</h1>', text, flags=re.MULTILINE)
-    text = re.sub(r'^## (.+)$', r'<h2>\1</h2>', text, flags=re.MULTILINE)
-    text = re.sub(r'^### (.+)$', r'<h3>\1</h3>', text, flags=re.MULTILINE)
+    return None
+
+def convert_youtube_links(text):
+    """YouTube 링크를 임베드로 변환"""
+    # YouTube URL 패턴
+    youtube_patterns = [
+        r'https?://(?:www\.)?youtube\.com/watch\?v=[\w-]+(?:&[\w=]*)*',
+        r'https?://(?:www\.)?youtu\.be/[\w-]+(?:\?[\w=]*)*',
+        r'https?://(?:www\.)?youtube\.com/embed/[\w-]+'
+    ]
     
-    # 굵은 글씨
-    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
-    
-    # 리스트 처리 (단순화)
-    lines = text.split('\n')
-    result_lines = []
-    in_list = False
-    list_type = None
-    list_number = 1  # 번호 초기화
-    
-    for line in lines:
-        stripped_line = line.strip()
-        
-        # HTML 태그가 이미 있는 줄은 그대로 추가
-        if stripped_line.startswith('<') and '>' in stripped_line:
-            if in_list:
-                result_lines.append(f'</{list_type}>')
-                in_list = False
-                list_type = None
-            result_lines.append(line)
-            continue
-        
-        # 리스트 아이템 처리
-        if stripped_line.startswith('- '):
-            if not in_list:
-                result_lines.append('<ul>')
-                in_list = True
-                list_type = 'ul'
-            elif list_type == 'ol':
-                result_lines.append('</ol>')
-                result_lines.append('<ul>')
-                list_type = 'ul'
-            result_lines.append(f'<li>{stripped_line[2:]}</li>')
-        elif stripped_line.startswith('1. ') or re.match(r'^\d+\. ', stripped_line):
-            if not in_list:
-                result_lines.append('<ol>')
-                in_list = True
-                list_type = 'ol'
-            elif list_type == 'ul':
-                result_lines.append('</ul>')
-                result_lines.append('<ol>')
-                list_type = 'ol'
-            content = re.sub(r'^\d+\. ', '', stripped_line)
-            result_lines.append(f'<li>{content}</li>')
-            list_number += 1  # 번호 증가
-        else:
-            # 리스트가 끝났을 때
-            if in_list and stripped_line:
-                result_lines.append(f'</{list_type}>')
-                in_list = False
-                list_type = None
+    for pattern in youtube_patterns:
+        matches = re.finditer(pattern, text)
+        for match in reversed(list(matches)):
+            url = match.group(0)
+            video_id = extract_youtube_id(url)
             
-            # 일반 텍스트
-            if stripped_line:
-                result_lines.append(f'<p>{stripped_line}</p>')
-            else:
-                result_lines.append('')
+            if video_id:
+                # YouTube 임베드 HTML
+                embed_html = f'''
+<div class="video-container">
+    <iframe 
+        src="https://www.youtube.com/embed/{video_id}" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+    </iframe>
+</div>'''
+                text = text[:match.start()] + embed_html + text[match.end():]
     
-    # 마지막에 리스트가 열려있으면 닫기
-    if in_list:
-        result_lines.append(f'</{list_type}>')
+    return text
+
+def convert_urls_to_links(text):
+    """일반 URL을 하이퍼링크로 변환 (YouTube 제외)"""
+    # URL 패턴 (http://, https://, www.)
+    url_pattern = r'(?:https?://|www\.)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:/[^\s<>]*)?'
     
-    return '\n'.join(result_lines)
+    def replace_url(match):
+        url = match.group(0)
+        
+        # YouTube URL인지 확인
+        if any(domain in url for domain in ['youtube.com', 'youtu.be']):
+            return url  # YouTube는 이미 처리됨
+        
+        # www.로 시작하면 http:// 추가
+        if url.startswith('www.'):
+            full_url = 'http://' + url
+        else:
+            full_url = url
+        
+        # 도메인 추출 (표시용)
+        parsed = urlparse(full_url)
+        display_text = parsed.netloc or url
+        
+        return f'<a href="{full_url}" target="_blank" rel="noopener noreferrer">{display_text}</a>'
+    
+    # HTML 태그 내부가 아닌 URL만 변환
+    # 이미 <a> 태그로 감싸져 있거나 href 속성 값인 경우 제외
+    results = []
+    last_end = 0
+    
+    # <a> 태그를 찾아서 그 내부는 건너뛰기
+    for a_match in re.finditer(r'<a[^>]*>.*?</a>', text, re.DOTALL):
+        # <a> 태그 이전 텍스트에서 URL 변환
+        before_text = text[last_end:a_match.start()]
+        converted = re.sub(url_pattern, replace_url, before_text)
+        results.append(converted)
+        
+        # <a> 태그는 그대로 추가
+        results.append(a_match.group(0))
+        last_end = a_match.end()
+    
+    # 마지막 <a> 태그 이후 텍스트 처리
+    remaining = text[last_end:]
+    converted = re.sub(url_pattern, replace_url, remaining)
+    results.append(converted)
+    
+    return ''.join(results)
+
+def highlight_code_block(match):
+    """코드 블록을 Pygments로 하이라이팅"""
+    if not PYGMENTS_AVAILABLE:
+        # Pygments가 없으면 기본 처리
+        code = match.group(2)
+        return f'<pre><code>{code}</code></pre>'
+    
+    language = match.group(1) or 'text'
+    code = match.group(2)
+    
+    try:
+        # 언어별 렉서 가져오기
+        if language:
+            lexer = get_lexer_by_name(language, stripall=True)
+        else:
+            lexer = guess_lexer(code)
+    except:
+        lexer = TextLexer()
+    
+    # Monokai 스타일의 HTML 포매터 사용
+    formatter = HtmlFormatter(
+        style='monokai',
+        noclasses=True,  # 인라인 스타일 사용
+        linenos=False,   # 라인 번호 표시 안함
+    )
+    
+    # 하이라이팅된 HTML 생성
+    highlighted = highlight(code, lexer, formatter)
+    
+    # 언어 라벨 추가
+    language_label = f'<span class="code-language">{language.upper()}</span>' if language != 'text' else ''
+    
+    return f'<div class="code-block-wrapper">{language_label}{highlighted}</div>'
+
+def markdown_to_html(text):
+    """markdown2를 사용하여 마크다운을 HTML로 변환"""
+    
+    # 1. 먼저 코드 블록을 플레이스홀더로 보호
+    code_blocks = []
+    code_block_pattern = r'```[\s\S]*?```'
+    
+    def save_code_block_temp(match):
+        idx = len(code_blocks)
+        code_blocks.append(match.group(0))
+        return f'%%%TEMPCODE{idx}%%%'
+    
+    # 코드 블록을 임시로 치환
+    text = re.sub(code_block_pattern, save_code_block_temp, text)
+    
+    # 2. YouTube 링크를 플레이스홀더로 저장 (코드 블록 외부만)
+    youtube_embeds = []
+    def save_youtube_embed(match):
+        url = match.group(0)
+        video_id = extract_youtube_id(url)
+        
+        if video_id:
+            idx = len(youtube_embeds)
+            embed_html = f'''
+<div class="video-container">
+    <iframe 
+        src="https://www.youtube.com/embed/{video_id}" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+    </iframe>
+</div>'''
+            youtube_embeds.append(embed_html)
+            return f'%%%YOUTUBE{idx}%%%'
+        return url
+    
+    def save_youtube_markdown_link(match):
+        link_text = match.group(1)  # 링크 텍스트
+        url = match.group(2)       # URL
+        video_id = extract_youtube_id(url)
+        
+        if video_id:
+            idx = len(youtube_embeds)
+            embed_html = f'''
+<div class="video-container">
+    <iframe 
+        src="https://www.youtube.com/embed/{video_id}" 
+        title="{link_text}" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+    </iframe>
+</div>'''
+            youtube_embeds.append(embed_html)
+            return f'%%%YOUTUBE{idx}%%%'
+        return match.group(0)  # 원본 마크다운 링크 반환
+    
+    # 1) 마크다운 링크 형식의 YouTube URL 먼저 처리
+    markdown_youtube_pattern = r'\[([^\]]+)\]\((https?://(?:www\.)?(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)[\w-]+(?:\?[\w=]*)*)\)'
+    text = re.sub(markdown_youtube_pattern, save_youtube_markdown_link, text)
+    
+    # 2) 직접 YouTube URL 패턴으로 치환
+    youtube_patterns = [
+        r'https?://(?:www\.)?youtube\.com/watch\?v=[\w-]+(?:&[\w=]*)*',
+        r'https?://(?:www\.)?youtu\.be/[\w-]+(?:\?[\w=]*)*',
+        r'https?://(?:www\.)?youtube\.com/embed/[\w-]+'
+    ]
+    
+    for pattern in youtube_patterns:
+        text = re.sub(pattern, save_youtube_embed, text)
+    
+    # 3. 코드 블록 복원
+    for idx, code_block in enumerate(code_blocks):
+        text = text.replace(f'%%%TEMPCODE{idx}%%%', code_block)
+    
+    # 4. Pygments 사용 시 코드 블록 처리
+    if PYGMENTS_AVAILABLE:
+        # 코드 블록을 임시 플레이스홀더로 치환
+        code_blocks = []
+        def save_code_block(match):
+            idx = len(code_blocks)
+            code_blocks.append(highlight_code_block(match))
+            return f'%%%CODEBLOCK{idx}%%%'
+        
+        # 코드 블록 찾아서 치환
+        text = re.sub(r'```(\w+)?\n(.*?)```', save_code_block, text, flags=re.DOTALL)
+    
+    # 5. markdown2 설정
+    extras = [
+        'fenced-code-blocks',  # ```로 둘러싸인 코드 블록 지원
+        'code-friendly',       # 코드 친화적 설정
+        'tables',              # 테이블 지원
+        'break-on-newline',    # 줄바꿈을 <br>로 변환
+        'header-ids',          # 헤더에 ID 자동 생성
+        'link-patterns',       # 링크 패턴 지원
+    ]
+    
+    # 링크 패턴 설정 (자동 링크 변환)
+    link_patterns = [
+        (re.compile(r'(?<!\()https?://[^\s<]+[^\s<\.\)\]]', re.I), r'\g<0>'),
+    ]
+    
+    # 6. 마크다운을 HTML로 변환
+    html = markdown2.markdown(text, extras=extras, link_patterns=link_patterns)
+    
+    # 7. 저장된 코드 블록 복원
+    if PYGMENTS_AVAILABLE:
+        for idx, code_block in enumerate(code_blocks):
+            html = html.replace(f'%%%CODEBLOCK{idx}%%%', code_block)
+    
+    # 8. YouTube embeds 복원
+    for idx, embed in enumerate(youtube_embeds):
+        html = html.replace(f'%%%YOUTUBE{idx}%%%', embed)
+    
+    # 9. 일반 URL을 링크로 변환 (YouTube 제외)
+    html = convert_urls_to_links(html)
+    
+    # 10. YouTube embed를 p 태그에서 분리하여 레이아웃 수정
+    html = fix_youtube_embed_layout(html)
+    
+    return html
+
+def fix_youtube_embed_layout(html):
+    """YouTube embed가 p 태그 안에 있으면 밖으로 빼내어 레이아웃 수정"""
+    # p 태그 안에 있는 video-container div를 찾아서 p 태그를 분리
+    pattern = r'<p>(.*?)<div class="video-container">(.*?)</div>(.*?)</p>'
+    
+    def replace_embed(match):
+        before_text = match.group(1).strip()
+        video_html = match.group(2)
+        after_text = match.group(3).strip()
+        
+        result = ""
+        
+        # 앞쪽 텍스트가 있으면 p 태그로 감싸기
+        if before_text:
+            # HTML 태그 제거 (br 등)
+            clean_before = re.sub(r'<br\s*/?>|</?strong>|</?em>', '', before_text).strip()
+            if clean_before:
+                result += f"<p>{before_text}</p>\n\n"
+        
+        # video-container를 독립적으로 배치
+        result += f'<div class="video-container">{video_html}</div>'
+        
+        # 뒤쪽 텍스트가 있으면 p 태그로 감싸기
+        if after_text:
+            # HTML 태그 제거 (br 등)
+            clean_after = re.sub(r'<br\s*/?>|</?strong>|</?em>', '', after_text).strip()
+            if clean_after:
+                result += f"\n\n<p>{after_text}</p>"
+        
+        return result
+    
+    # 한 번만 실행하여 모든 패턴 교체 (무한 루프 방지)
+    html = re.sub(pattern, replace_embed, html, flags=re.DOTALL)
+    
+    return html
+
+def generate_pygments_css():
+    """Pygments 스타일 CSS 생성"""
+    if not PYGMENTS_AVAILABLE:
+        return ""
+    
+    # Monokai 스타일의 CSS 생성
+    formatter = HtmlFormatter(style='monokai')
+    css = formatter.get_style_defs()
+    
+    # 추가 스타일
+    additional_css = """
+        /* 코드 블록 래퍼 스타일 */
+        .code-block-wrapper {
+            position: relative;
+            margin: 24px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .code-block-wrapper .highlight {
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+        
+        .code-block-wrapper pre {
+            margin: 0 !important;
+            padding: 24px !important;
+            border-radius: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* 언어 라벨 */
+        .code-language {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* 코드 하이라이팅 개선 */
+        .highlight {
+            line-height: 1.6 !important;
+            font-family: 'JetBrains Mono', monospace !important;
+            font-size: 14px !important;
+        }
+        
+        /* 다크 테마에서 코드 블록 스타일 */
+        .lead-slide .code-block-wrapper {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lead-slide .code-language {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 비디오 컨테이너 */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 비율 */
+            margin: 24px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 링크 스타일 */
+        a {
+            color: #0064FF;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        a:hover {
+            border-bottom-color: #0064FF;
+        }
+        
+        .lead-slide a {
+            color: #0064FF;
+        }
+        
+        .lead-slide a:hover {
+            border-bottom-color: #0064FF;
+            transform: translateY(2px);
+        }
+    """
+    
+    return css + additional_css
 
 def generate_html_template(title, phase):
     """HTML 템플릿 생성"""
+    pygments_css = generate_pygments_css() if PYGMENTS_AVAILABLE else ""
+    
     return f"""<!DOCTYPE html>
 <html lang="ko-KR">
 <head>
@@ -219,46 +535,50 @@ def generate_html_template(title, phase):
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin-left: 192px;
+            width: 100%;
+            padding-left: 192px; /* 스크롤 스파이 공간 */
         }}
         
         .content-wrapper {{
             max-width: 1024px;
             width: 100%;
             padding: 32px;
+            margin: 0 auto;
+            position: relative;
+            left: 40px; /* 살짝 오른쪽으로 이동하여 실제 중앙에 배치 */
         }}
         
         /* Navigation */
         .nav-container {{
             position: fixed;
-            top: 24px;
+            top: 33px;
             right: 24px;
             z-index: 40;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }}
         
         .nav-button {{
-            background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
-            color: #fff;
-            border: none;
+            background: transparent;
+            color: #000;
+            border: 1px solid #000;
+            border-radius: 0.125rem;
             padding: 12px 20px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             display: block;
-            width: 100%;
-            margin: 4px 0;
-            box-shadow: 0 4px 16px rgba(108, 117, 125, 0.3);
+            width: auto;
+            box-shadow: none;
+            opacity: 0.6;
         }}
         
         .nav-button:hover {{
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(108, 117, 125, 0.4);
+            background: rgba(0, 0, 0, 0.05);
+            opacity: 1.0;
         }}
         
         /* Progress Bar */
@@ -287,19 +607,24 @@ def generate_html_template(title, phase):
         }}
         
         .scroll-spy-item {{
-            padding: 4px 8px;
+            padding: 2px 8px;
             cursor: pointer;
             transition: all 0.2s;
             font-size: 10px;
             line-height: 1.3;
             border-left: 2px solid transparent;
             color: #666;
+            box-sizing: border-box;
+            overflow: hidden;
+            font-style: italic;
+            opacity: 0.5;
         }}
         
         .scroll-spy-item:hover {{
             background: #f5f5f5;
             border-left-color: #ddd;
             color: #333;
+            opacity: 0.7;
         }}
         
         .scroll-spy-item.active {{
@@ -307,8 +632,10 @@ def generate_html_template(title, phase):
             border-left-color: #000;
             color: #000;
             font-weight: 500;
+            opacity: 1.0;
         }}
         
+        /* 번호 스타일 제거됨
         .scroll-spy-number {{
             display: inline-block;
             width: 24px;
@@ -319,26 +646,108 @@ def generate_html_template(title, phase):
         
         .scroll-spy-item.active .scroll-spy-number {{
             color: #000;
-        }}
+        }} */
         
         /* Slides */
         .lead-slide {{
-            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 120, 120, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(160, 160, 160, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(200, 200, 200, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #f0f0f2 0%, #e8e8ea 25%, #d8d8da 50%, #c8c8ca 75%, #b8b8ba 100%);
             color: #fff;
             text-align: center;
-            padding: 150px 32px;
-            margin-bottom: 48px;
+            padding: 180px 48px;
+            margin-bottom: 64px;
             position: relative;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 20px 40px rgba(44, 44, 46, 0.3);
+            box-shadow: 
+                0 32px 64px rgba(0, 0, 0, 0.08),
+                0 16px 32px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }}
+        
+        .lead-slide::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 70%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }}
+        
+        .lead-slide::after {{
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 200px,
+                rgba(255, 255, 255, 0.01) 200px,
+                rgba(255, 255, 255, 0.01) 201px
+            );
+            pointer-events: none;
+            animation: subtle-move 20s ease-in-out infinite;
+        }}
+        
+        @keyframes subtle-move {{
+            0%, 100% {{ transform: translateX(0) translateY(0); }}
+            50% {{ transform: translateX(-20px) translateY(-20px); }}
         }}
         
         .lead-slide h1, .lead-slide h2, .lead-slide h3, .lead-slide p, .lead-slide strong, .lead-slide code, .lead-slide ul, .lead-slide li {{
             color: #fff !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }}
+        
+        .lead-slide h1 {{
+            font-size: 64px !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.02em;
+            margin-bottom: 32px !important;
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }}
+        
+        .lead-slide h2 {{
+            font-size: 28px !important;
+            font-weight: 400 !important;
+            opacity: 0.9;
+            letter-spacing: 0.02em;
+            margin-bottom: 48px !important;
+        }}
+        
+        .lead-slide p {{
+            font-size: 18px !important;
+            font-weight: 300 !important;
+            opacity: 0.8;
+            letter-spacing: 0.01em;
+            line-height: 1.8;
+        }}
+        
+        /* strong 태그의 배경색 제거 */
+        .lead-slide strong {{
+            background: none !important;
+            padding: 0 !important;
+            font-weight: 600 !important;
         }}
         
         .slide-card {{
@@ -351,7 +760,7 @@ def generate_html_template(title, phase):
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }}
         
-        .slide-card h1, .slide-card h2, .slide-card h3, .slide-card p, .slide-card strong, .slide-card code, .slide-card ul, .slide-card li {{
+        .slide-card p, .slide-card strong, .slide-card code, .slide-card ul, .slide-card li {{
             color: #424245;
         }}
         
@@ -363,28 +772,28 @@ def generate_html_template(title, phase):
         
         /* Typography */
         h1 {{
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 800;
-            margin-bottom: 24px;
+            margin-bottom: 56px;
             line-height: 1.1;
+            color: #0064FF;
+            opacity: 0.8;
         }}
         
         h2 {{
-            font-size: 32px;
+            font-size: 40px;
             font-weight: 700;
-            margin: 32px 0 16px 0;
-            color: #1d1d1f;
-            background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin: 24px 0 40px 0;
+            color: #0064FF;
+            opacity: 0.8;
         }}
         
         h3 {{
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
-            margin: 24px 0 12px 0;
-            color: #424245;
+            margin: 16px 0 32px 0;
+            color: #0064FF;
+            opacity: 0.8;
         }}
         
         p {{
@@ -419,13 +828,18 @@ def generate_html_template(title, phase):
             border-left: 4px solid #6c757d;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             border: 1px solid #333;
+            border-radius: 8px;
         }}
         
         pre code {{
             background: transparent !important;
             color: #f1f1f1 !important;
             padding: 0;
+            font-size: inherit;
         }}
+        
+        /* Pygments 코드 하이라이팅 스타일 */
+        {pygments_css}
         
         ul, ol {{
             margin: 24px 0;
@@ -435,6 +849,31 @@ def generate_html_template(title, phase):
         li {{
             margin-bottom: 8px;
             color: #424245;
+        }}
+        
+        /* Tables */
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }}
+        
+        th, td {{
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }}
+        
+        th {{
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }}
+        
+        tr:hover {{
+            background: #f9f9f9;
         }}
         
         /* Utilities */
@@ -493,7 +932,11 @@ def generate_html_template(title, phase):
             }}
             
             .main-container {{
-                margin-left: 0;
+                padding-left: 0; /* 모바일에서는 왼쪽 패딩 제거 */
+            }}
+            
+            .content-wrapper {{
+                left: 0; /* 모바일에서는 중앙 보정 제거 */
             }}
             
             .nav-container {{
@@ -583,14 +1026,58 @@ def generate_html_footer():
             const scrollSpyList = document.getElementById('scrollSpyList');
             const scrollSpy = document.getElementById('scrollSpy');
             
-            // Calculate optimal line height based on number of slides
-            const containerHeight = window.innerHeight;
-            const slideCount = slides.length;
-            const padding = 32; // top and bottom padding
-            const availableHeight = containerHeight - padding;
-            const itemHeight = Math.max(availableHeight / slideCount, 20); // minimum 20px per item
+            function calculateDynamicSizes() {
+                const containerHeight = window.innerHeight;
+                const slideCount = slides.length;
+                const padding = 32; // top and bottom padding
+                const availableHeight = containerHeight - padding;
+                
+                // Calculate optimal item height (minimum 16px, maximum 30px)
+                let itemHeight = Math.max(Math.min(availableHeight / slideCount, 30), 16);
+                
+                // Calculate font size based on item height
+                let fontSize = Math.max(Math.min(itemHeight * 0.6, 12), 8);
+                
+                // Calculate line height
+                let lineHeight = itemHeight * 0.8;
+                
+                // If items still don't fit, reduce further
+                const totalRequiredHeight = itemHeight * slideCount;
+                if (totalRequiredHeight > availableHeight) {
+                    const scaleFactor = availableHeight / totalRequiredHeight;
+                    itemHeight *= scaleFactor;
+                    fontSize *= scaleFactor;
+                    lineHeight *= scaleFactor;
+                }
+                
+                return {
+                    itemHeight: Math.max(itemHeight, 12), // absolute minimum
+                    fontSize: Math.max(fontSize, 7), // absolute minimum
+                    lineHeight: Math.max(lineHeight, 10) // absolute minimum
+                };
+            }
+            
+            function updateScrollSpySizes() {
+                const sizes = calculateDynamicSizes();
+                document.querySelectorAll('.scroll-spy-item').forEach((item, index) => {
+                    item.style.height = sizes.itemHeight + 'px';
+                    item.style.fontSize = sizes.fontSize + 'px';
+                    item.style.lineHeight = sizes.lineHeight + 'px';
+                    
+                    // Update title text for screen size
+                    const slide = slides[index];
+                    if (slide) {
+                        const slideTitle = getSlideTitle(slide);
+                        const span = item.querySelector('span');
+                        if (span) {
+                            span.textContent = slideTitle;
+                        }
+                    }
+                });
+            }
             
             // Generate scroll spy items
+            const initialSizes = calculateDynamicSizes();
             slides.forEach((slide, index) => {
                 const slideNumber = slide.id.replace('slide-', '');
                 const slideTitle = getSlideTitle(slide);
@@ -598,11 +1085,12 @@ def generate_html_footer():
                 const spyItem = document.createElement('div');
                 spyItem.className = 'scroll-spy-item';
                 spyItem.setAttribute('data-slide', slide.id);
-                spyItem.style.height = itemHeight + 'px';
+                spyItem.style.height = initialSizes.itemHeight + 'px';
+                spyItem.style.fontSize = initialSizes.fontSize + 'px';
+                spyItem.style.lineHeight = initialSizes.lineHeight + 'px';
                 spyItem.style.display = 'flex';
                 spyItem.style.alignItems = 'center';
                 spyItem.innerHTML = `
-                    <span class="scroll-spy-number">${slideNumber}.</span>
                     <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${slideTitle}</span>
                 `;
                 
@@ -637,29 +1125,37 @@ def generate_html_footer():
                 spyObserver.observe(slide);
             });
             
-            // Handle window resize
+            // Handle window resize with debouncing
+            let resizeTimeout;
             window.addEventListener('resize', () => {
-                const newHeight = window.innerHeight;
-                const newItemHeight = Math.max((newHeight - padding) / slideCount, 20);
-                document.querySelectorAll('.scroll-spy-item').forEach(item => {
-                    item.style.height = newItemHeight + 'px';
-                });
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    updateScrollSpySizes();
+                }, 100);
             });
         }
         
         function getSlideTitle(slide) {
+            // Calculate max title length based on screen size
+            const screenWidth = window.innerWidth;
+            let maxLength = 35;
+            
+            if (screenWidth < 1200) maxLength = 25;
+            if (screenWidth < 1000) maxLength = 20;
+            if (screenWidth < 800) maxLength = 15;
+            
             // Try to get the first heading or first few words of content
             const heading = slide.querySelector('h1, h2, h3');
             if (heading) {
                 const text = heading.textContent.trim();
-                return text.length > 35 ? text.substring(0, 35) + '...' : text;
+                return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
             }
             
             // If no heading, get first paragraph
             const firstPara = slide.querySelector('p');
             if (firstPara) {
                 const text = firstPara.textContent.trim();
-                return text.length > 35 ? text.substring(0, 35) + '...' : text;
+                return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
             }
             
             return 'Slide';
@@ -705,6 +1201,8 @@ def convert_markdown_to_html(input_file, output_file):
         return False
     
     print(f"총 {len(slides)}개의 슬라이드를 발견했습니다.")
+    if PYGMENTS_AVAILABLE:
+        print("Pygments를 사용하여 코드 하이라이팅을 적용합니다.")
     
     # HTML 생성
     html_content = generate_html_template(title, phase)
@@ -717,11 +1215,19 @@ def convert_markdown_to_html(input_file, output_file):
             # 마크다운을 HTML로 변환
             slide_html = markdown_to_html(slide['content'])
             
+            # 다음 슬라이드가 있으면 링크 추가
+            next_slide_link = ""
+            if i + 1 < len(slides):
+                next_slide_id = f"slide-{slides[i + 1]['number']}"
+                next_slide_link = f'<a href="#{next_slide_id}" style="color: inherit; text-decoration: none;">스크롤하여 계속 읽기 ↓</a>'
+            else:
+                next_slide_link = '스크롤하여 계속 읽기 ↓'
+            
             html_content += f'''
         <!-- Lead Slide {slide['number']} -->
         <div class="{slide_class}" id="{slide_id}">
             {slide_html}
-            <p style="margin-top: 32px; opacity: 0.8;">스크롤하여 계속 읽기 ↓</p>
+            <p style="margin-top: 32px; opacity: 0.8;">{next_slide_link}</p>
         </div>
         '''
         else:
@@ -837,13 +1343,13 @@ def main():
     """메인 함수"""
     if len(sys.argv) < 2:
         print("사용법:")
-        print("  단일 파일: python convert_to_continuous.py <input_markdown_file> [output_html_file]")
-        print("  폴더 처리: python convert_to_continuous.py <input_directory> [output_directory]")
+        print("  단일 파일: python convert_to_continuous_v4.py <input_markdown_file> [output_html_file]")
+        print("  폴더 처리: python convert_to_continuous_v4.py <input_directory> [output_directory]")
         print()
         print("예시:")
-        print("  python convert_to_continuous.py slides_part1_reorganized.md")
-        print("  python convert_to_continuous.py marp_md/")
-        print("  python convert_to_continuous.py marp_md/ html/")
+        print("  python convert_to_continuous_v4.py slides_part1_reorganized.md")
+        print("  python convert_to_continuous_v4.py marp_md/")
+        print("  python convert_to_continuous_v4.py marp_md/ html/")
         return
     
     input_path = Path(sys.argv[1])

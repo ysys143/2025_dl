@@ -202,12 +202,44 @@
         
         .lead-slide h1, .lead-slide h2, .lead-slide h3, .lead-slide p, .lead-slide strong, .lead-slide code, .lead-slide ul, .lead-slide li {
             color: #fff !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .lead-slide h1 {
+            font-size: 64px !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.02em;
+            margin-bottom: 32px !important;
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+        
+        .lead-slide h2 {
+            font-size: 28px !important;
+            font-weight: 400 !important;
+            opacity: 0.9;
+            letter-spacing: 0.02em;
+            margin-bottom: 48px !important;
+        }
+        
+        .lead-slide p {
+            font-size: 18px !important;
+            font-weight: 300 !important;
+            opacity: 0.8;
+            letter-spacing: 0.01em;
+            line-height: 1.8;
         }
         
         /* strong 태그의 배경색 제거 */
         .lead-slide strong {
             background: none !important;
             padding: 0 !important;
+            font-weight: 600 !important;
         }
         
         .slide-card {
@@ -237,6 +269,7 @@
             margin-bottom: 56px;
             line-height: 1.1;
             color: #0064FF;
+            opacity: 0.8;
         }
         
         h2 {
@@ -244,6 +277,7 @@
             font-weight: 700;
             margin: 24px 0 40px 0;
             color: #0064FF;
+            opacity: 0.8;
         }
         
         h3 {
@@ -251,6 +285,7 @@
             font-weight: 600;
             margin: 16px 0 32px 0;
             color: #0064FF;
+            opacity: 0.8;
         }
         
         p {
@@ -601,7 +636,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Lead Slide 1 -->
         <div class="lead-slide" id="slide-1">
-            <h2 id="phase-ii-현대-ai와-도전과제-29-73장">Phase II: 현대 AI와 도전과제 (29-73장)</h2>
+            <h1 id="ai의-진화-기계는-생각할-수-있는가"><strong>AI의 진화: 기계는 생각할 수 있는가?</strong></h1>
+
+<p>위데이터랩 인공지능 트렌드 강연<br />
+Phase II: 현대 AI와 도전과제 (29-73장)</p>
 
             <p style="margin-top: 32px; opacity: 0.8;"><a href="#slide-2" style="color: inherit; text-decoration: none;">스크롤하여 계속 읽기 ↓</a></p>
         </div>
@@ -610,9 +648,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 2 -->
         <div class="slide-card" id="slide-2">
-            <h2 id="5부-자연어처리-인터페이스의-혁명-29-42장">5부: 자연어처리 - 인터페이스의 혁명 (29-42장)</h2>
-
-<h3 id="29-nlp-기계가-인간의-언어를-이해하다">29. NLP: 기계가 인간의 언어를 이해하다</h3>
+            <h1 id="29-nlp-기계가-인간의-언어를-이해하다">29. NLP: 기계가 인간의 언어를 이해하다</h1>
 
 <p><strong>언어 이해의 기술적 도전</strong>:<br />
 인간 언어는 모호성, 문맥 의존성, 은유와 함축으로 가득합니다. 기계가 이를 이해한다는 것은 단순한 패턴 매칭을 넘어 의미를 파악하는 것을 의미합니다.</p>
@@ -644,7 +680,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 3 -->
         <div class="slide-card" id="slide-3">
-            <h3 id="30-transformer-아키텍처-173000회-인용된-논문의-기술적-혁신">30. Transformer 아키텍처: 173,000회 인용된 논문의 기술적 혁신</h3>
+            <h1 id="30-transformer-아키텍처-173000회-인용된-논문의-기술적-혁신">30. Transformer 아키텍처: 173,000회 인용된 논문의 기술적 혁신</h1>
 
 <p><strong>논문 정보</strong>:<br />
 2017년 Google Research팀(Vaswani et al.)이 발표한 "Attention is All You Need"는 2025년 기준 173,000회 이상 인용되며 21세기 가장 영향력 있는 논문 10위 안에 들었습니다.</p>
@@ -682,7 +718,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 4 -->
         <div class="slide-card" id="slide-4">
-            <h3 id="31-bert-양방향-언어-이해의-시작">31. BERT: 양방향 언어 이해의 시작</h3>
+            <h1 id="31-bert-양방향-언어-이해의-시작">31. BERT: 양방향 언어 이해의 시작</h1>
 
 <p><strong>제목</strong>: Google이 검색을 혁신한 방법</p>
 
@@ -692,9 +728,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 - 양방향 이해: 앞뒤 문맥 동시 파악</p>
 
 <p><strong>실무 활용 사례</strong>:<br />
-- Google 검색: BERT 도입으로 검색 정확도 10% 향상<br />
-- Microsoft Bing: BERT로 스니펫 품질 대폭 개선<br />
-- Facebook RoBERTa: 유해 콘텐츠 탐지 정확도 95% 달성</p>
+- Google 검색 정확도 10% 향상<br />
+- 네이버 스마트 에디터<br />
+- 카카오톡 추천 답변</p>
 
 <p><strong>Pre-training의 마법</strong>:<br />
 - 위키피디아 전체로 기초 학습<br />
@@ -713,7 +749,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 5 -->
         <div class="slide-card" id="slide-5">
-            <h3 id="32-gpt의-등장-생성형-ai의-서막">32. GPT의 등장: 생성형 AI의 서막</h3>
+            <h1 id="32-gpt의-등장-생성형-ai의-서막">32. GPT의 등장: 생성형 AI의 서막</h1>
 
 <p><strong>제목</strong>: OpenAI의 도박, 그리고 대박</p>
 
@@ -743,7 +779,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 6 -->
         <div class="slide-card" id="slide-6">
-            <h3 id="33-llm의-학습과-추론-마법-뒤의-과학">33. LLM의 학습과 추론: 마법 뒤의 과학</h3>
+            <h1 id="33-llm의-학습과-추론-마법-뒤의-과학">33. LLM의 학습과 추론: 마법 뒤의 과학</h1>
 
 <p><strong>제목</strong>: "GPT는 어떻게 똑똑해졌을까?"</p>
 
@@ -802,7 +838,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 7 -->
         <div class="slide-card" id="slide-7">
-            <h3 id="34-ai-alignment-인간과-ai의-가치-정렬">34. AI Alignment: 인간과 AI의 가치 정렬</h3>
+            <h1 id="34-ai-alignment-인간과-ai의-가치-정렬">34. AI Alignment: 인간과 AI의 가치 정렬</h1>
 
 <p><strong>제목</strong>: "똑똑한 AI가 위험한 이유, 그리고 해결책"</p>
 
@@ -861,7 +897,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 8 -->
         <div class="slide-card" id="slide-8">
-            <h3 id="35-adversarial-attack-ai의-취약점과-방어">35. Adversarial Attack: AI의 취약점과 방어</h3>
+            <h1 id="35-adversarial-attack-ai의-취약점과-방어">35. Adversarial Attack: AI의 취약점과 방어</h1>
 
 <p><strong>제목</strong>: "AI를 속이는 기술, 그리고 막는 기술"</p>
 
@@ -955,7 +991,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 9 -->
         <div class="slide-card" id="slide-9">
-            <h3 id="36-한국어-nlp의-도전과-혁신">36. 한국어 NLP의 도전과 혁신</h3>
+            <h1 id="36-한국어-nlp의-도전과-혁신">36. 한국어 NLP의 도전과 혁신</h1>
 
 <p><strong>제목</strong>: 세종대왕님이 만드신 한글, AI도 어렵다</p>
 
@@ -967,7 +1003,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p><strong>한국 AI의 대응</strong>:<br />
 - KoBERT, KoGPT 개발<br />
 - 형태소 분석기 + Transformer<br />
-- OpenAI GPT-4, Google Gemini Ultra</p>
+- 네이버 HyperCLOVA, 카카오 KoGPT</p>
 
 <p><strong>성공 사례</strong>:<br />
 - 토스: 고객 상담 자동화<br />
@@ -986,7 +1022,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 10 -->
         <div class="slide-card" id="slide-10">
-            <h3 id="37-프롬프트-엔지니어링-새로운-프로그래밍">37. 프롬프트 엔지니어링: 새로운 프로그래밍</h3>
+            <h1 id="37-프롬프트-엔지니어링-새로운-프로그래밍">37. 프롬프트 엔지니어링: 새로운 프로그래밍</h1>
 
 <p><strong>제목</strong>: 코드 대신 자연어로 프로그래밍하기</p>
 
@@ -1020,7 +1056,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 11 -->
         <div class="slide-card" id="slide-11">
-            <h3 id="38-토큰-이코노미-ai의-화폐-시스템">38. 토큰 이코노미: AI의 화폐 시스템</h3>
+            <h1 id="38-토큰-이코노미-ai의-화폐-시스템">38. 토큰 이코노미: AI의 화폐 시스템</h1>
 
 <p><strong>제목</strong>: 왜 AI는 글자수로 요금을 매기나?</p>
 
@@ -1051,7 +1087,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 12 -->
         <div class="slide-card" id="slide-12">
-            <h3 id="39-api-시대-ai-as-a-service">39. API 시대: AI as a Service</h3>
+            <h1 id="39-api-시대-ai-as-a-service">39. API 시대: AI as a Service</h1>
 
 <p><strong>제목</strong>: 내 서비스에 AI 붙이기, 10분이면 충분</p>
 
@@ -1059,7 +1095,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 - OpenAI: GPT, DALL-E, Whisper<br />
 - Google: Gemini, PaLM<br />
 - Anthropic: Claude<br />
-- Meta: LLaMA 2, Stability AI: Stable Diffusion</p>
+- 국내: 네이버 CLOVA, 카카오 Karlo</p>
 
 <p><strong>실제 구현 예시</strong>:<br />
 <div class="code-block-wrapper"><span class="code-language">PYTHON</span><div class="highlight" style="background: #272822"><pre style="line-height: 125%;"><span></span><span style="color: #F8F8F2">response</span> <span style="color: #FF4689">=</span> <span style="color: #F8F8F2">openai</span><span style="color: #FF4689">.</span><span style="color: #F8F8F2">ChatCompletion</span><span style="color: #FF4689">.</span><span style="color: #F8F8F2">create(</span>
@@ -1087,7 +1123,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 13 -->
         <div class="slide-card" id="slide-13">
-            <h3 id="40-평가-메트릭-ai의-성적표-읽기">40. 평가 메트릭: AI의 성적표 읽기</h3>
+            <h1 id="40-평가-메트릭-ai의-성적표-읽기">40. 평가 메트릭: AI의 성적표 읽기</h1>
 
 <p><strong>제목</strong>: BLEU, ROUGE, Perplexity... 이게 다 뭐야?</p>
 
@@ -1152,7 +1188,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 14 -->
         <div class="slide-card" id="slide-14">
-            <h3 id="41-ai-연구-생태계-arxiv-github-그리고-새로운-평가">41. AI 연구 생태계: ArXiv, GitHub, 그리고 새로운 평가</h3>
+            <h1 id="41-ai-연구-생태계-arxiv-github-그리고-새로운-평가">41. AI 연구 생태계: ArXiv, GitHub, 그리고 새로운 평가</h1>
 
 <p><strong>제목</strong>: "AI 발전의 엔진: 오픈 사이언스와 협업"</p>
 
@@ -1223,7 +1259,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 15 -->
         <div class="slide-card" id="slide-15">
-            <h3 id="42-nlp-민주화-no-code-ai-도구들">42. NLP 민주화: No-Code AI 도구들</h3>
+            <h1 id="42-nlp-민주화-no-code-ai-도구들">42. NLP 민주화: No-Code AI 도구들</h1>
 
 <p><strong>제목</strong>: 코딩 몰라도 AI 쓸 수 있다</p>
 
@@ -1257,7 +1293,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
         <div class="slide-card" id="slide-16">
             <h2 id="6부-llm-시대와-멀티모달-ai-43-54장">6부: LLM 시대와 멀티모달 AI (43-54장)</h2>
 
-<h3 id="43-chatgpt-쇼크-2022년-11월-30일">43. ChatGPT 쇼크: 2022년 11월 30일</h3>
+<h1 id="43-chatgpt-쇼크-2022년-11월-30일">43. ChatGPT 쇼크: 2022년 11월 30일</h1>
 
 <p><strong>제목</strong>: AI 역사상 가장 빠른 1억 사용자 달성</p>
 
@@ -1289,7 +1325,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 17 -->
         <div class="slide-card" id="slide-17">
-            <h3 id="44-llm-스케일-전쟁-크기가-전부는-아니다">44. LLM 스케일 전쟁: 크기가 전부는 아니다</h3>
+            <h1 id="44-llm-스케일-전쟁-크기가-전부는-아니다">44. LLM 스케일 전쟁: 크기가 전부는 아니다</h1>
 
 <p><strong>제목</strong>: 1750억 vs 70억, 다윗이 골리앗을 이기다</p>
 
@@ -1320,7 +1356,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 18 -->
         <div class="slide-card" id="slide-18">
-            <h3 id="45-멀티모달-ai-보고-듣고-말하는-ai">45. 멀티모달 AI: 보고 듣고 말하는 AI</h3>
+            <h1 id="45-멀티모달-ai-보고-듣고-말하는-ai">45. 멀티모달 AI: 보고 듣고 말하는 AI</h1>
 
 <p><strong>제목</strong>: 인간처럼 오감을 가진 AI의 등장</p>
 
@@ -1351,7 +1387,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 19 -->
         <div class="slide-card" id="slide-19">
-            <h3 id="46-프롬프트에서-에이전트로-자율-ai">46. 프롬프트에서 에이전트로: 자율 AI</h3>
+            <h1 id="46-프롬프트에서-에이전트로-자율-ai">46. 프롬프트에서 에이전트로: 자율 AI</h1>
 
 <p><strong>제목</strong>: 지시 따르기 → 스스로 일하기</p>
 
@@ -1383,7 +1419,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 20 -->
         <div class="slide-card" id="slide-20">
-            <h3 id="47-llm-hallucination-674억-달러의-경제적-손실">47. LLM Hallucination: 674억 달러의 경제적 손실</h3>
+            <h1 id="47-llm-hallucination-674억-달러의-경제적-손실">47. LLM Hallucination: 674억 달러의 경제적 손실</h1>
 
 <p><strong>2024년 환각 현상의 실제 영향</strong>:<br />
 전 세계적으로 AI의 잘못된 정보 생성으로 인한 경제적 손실이 674억 달러에 달했습니다. 기업 AI 사용자의 47%가 환각된 콘텐츠를 기반으로 최소 1건 이상의 주요 의사결정을 내렸습니다.</p>
@@ -1416,7 +1452,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 21 -->
         <div class="slide-card" id="slide-21">
-            <h3 id="48-llm의-편향성-91의-모델이-가진-구조적-문제">48. LLM의 편향성: 91%의 모델이 가진 구조적 문제</h3>
+            <h1 id="48-llm의-편향성-91의-모델이-가진-구조적-문제">48. LLM의 편향성: 91%의 모델이 가진 구조적 문제</h1>
 
 <p><strong>2024년 편향성 연구 데이터</strong>:<br />
 현재 LLM의 91%가 웹 스크래핑 데이터로 학습되었으며, 이 데이터에서 여성은 전문직 맥락에서 41% 과소대표되고, 소수자의 목소리는 35% 적게 나타납니다.</p>
@@ -1449,7 +1485,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 22 -->
         <div class="slide-card" id="slide-22">
-            <h3 id="49-오픈소스-llm의-경제적-영향-api-가격-전쟁의-시작">49. 오픈소스 LLM의 경제적 영향: API 가격 전쟁의 시작</h3>
+            <h1 id="49-오픈소스-llm의-경제적-영향-api-가격-전쟁의-시작">49. 오픈소스 LLM의 경제적 영향: API 가격 전쟁의 시작</h1>
 
 <p><strong>Llama 3 출시 후 시장 변화</strong>:<br />
 2024년 4월 18일 Meta가 Llama 3를 공개한 후 첫 주에만 120만 회 다운로드되었고, Hugging Face에 11,000개 이상의 파생 모델이 등록되었습니다.</p>
@@ -1482,7 +1518,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 23 -->
         <div class="slide-card" id="slide-23">
-            <h3 id="50-llm-최적화-작고-빠르고-저렴하게">50. LLM 최적화: 작고 빠르고 저렴하게</h3>
+            <h1 id="50-llm-최적화-작고-빠르고-저렴하게">50. LLM 최적화: 작고 빠르고 저렴하게</h1>
 
 <p><strong>제목</strong>: 슈퍼컴퓨터 없이도 AI 돌리기</p>
 
@@ -1515,7 +1551,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 24 -->
         <div class="slide-card" id="slide-24">
-            <h3 id="51-추론-최적화-실전-비용-절감의-기술">51. 추론 최적화: 실전 비용 절감의 기술</h3>
+            <h1 id="51-추론-최적화-실전-비용-절감의-기술">51. 추론 최적화: 실전 비용 절감의 기술</h1>
 
 <p><strong>제목</strong>: "같은 성능, 10배 빠르게, 100배 저렴하게"</p>
 
@@ -1605,27 +1641,27 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 25 -->
         <div class="slide-card" id="slide-25">
-            <h3 id="52-글로벌-llm-경쟁-거대-기술-기업들의-ai-전쟁">52. 글로벌 LLM 경쟁: 거대 기술 기업들의 AI 전쟁</h3>
+            <h1 id="52-한국의-llm-k-ai의-도전">52. 한국의 LLM: K-AI의 도전</h1>
 
-<p><strong>제목</strong>: OpenAI vs Google vs Meta vs Anthropic</p>
+<p><strong>제목</strong>: 네이버 하이퍼클로바 vs 카카오 vs 삼성</p>
 
-<p><strong>2024-2025 LLM 판도</strong>:<br />
-- OpenAI GPT-4o: 멀티모달 실시간 처리, 128K 컨텍스트<br />
-- Google Gemini Ultra: 1.56T 파라미터, 32개 언어 지원<br />
-- Anthropic Claude 3: 200K 토큰 컨텍스트, Constitutional AI<br />
-- Meta LLaMA 3: 오픈소스 전략으로 생태계 장악</p>
+<p><strong>국내 LLM 현황</strong>:<br />
+- 네이버 HyperCLOVA X<br />
+- 카카오 KoGPT<br />
+- LG AI Research EXAONE<br />
+- 삼성 가우스</p>
 
-<p><strong>기술 혁신 경쟁</strong>:<br />
-- 컨텍스트 길이 전쟁: 2K → 128K → 1M 토큰<br />
-- 멀티모달 통합: 텍스트, 이미지, 음성, 비디오 동시 처리<br />
-- 추론 능력 강화: Chain-of-Thought, Self-Critique<br />
-- 효율성 개선: 파라미터 대비 성능 10배 향상</p>
+<p><strong>한국어 특화의 의미</strong>:<br />
+- 문화적 맥락 이해<br />
+- 한국 법률/규제 준수<br />
+- 로컬 데이터 처리<br />
+- 방언, 신조어 대응</p>
 
-<p><strong>산업 영향력</strong>:<br />
-- Microsoft + OpenAI: Office 365 Copilot으로 기업 시장 장악<br />
-- Google: 검색과 광고 비즈니스 재편<br />
-- Amazon: Bedrock으로 클라우드 AI 서비스 혁신<br />
-- Apple: 온디바이스 AI로 프라이버시 중심 접근</p>
+<p><strong>산업 적용 사례</strong>:<br />
+- 금융: 신한은행 AI 뱅커<br />
+- 통신: SKT A.<br />
+- 제조: 현대차 AI 어시스턴트<br />
+- 공공: 정부 챗봇 서비스</p>
 
             
             <div class="page-info">
@@ -1639,7 +1675,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Slide 26 -->
         <div class="slide-card" id="slide-26">
-            <h3 id="53-직업의-미래-ai가-바꾸는-노동-시장">53. 직업의 미래: AI가 바꾸는 노동 시장</h3>
+            <h1 id="53-직업의-미래-ai가-바꾸는-노동-시장">53. 직업의 미래: AI가 바꾸는 노동 시장</h1>
 
 <p><strong>"모든 직업이 위험하다, 심지어 AI 개발자도"</strong></p>
 
@@ -1682,7 +1718,7 @@ AI/ML 전문가 수요가 증가한다고 하지만, 정작 AI가 AI를 개발�
 
         <!-- Slide 27 -->
         <div class="slide-card" id="slide-27">
-            <h3 id="54-개발자의-진화-주니어의-죽음과-부활">54. 개발자의 진화: 주니어의 죽음과 부활</h3>
+            <h1 id="54-개발자의-진화-주니어의-죽음과-부활">54. 개발자의 진화: 주니어의 죽음과 부활</h1>
 
 <p><strong>제목</strong>: "The Death and Revenge of the Junior Developer"</p>
 
@@ -1817,7 +1853,7 @@ Sourcegraph 엔지니어 Steve Yegge:</p>
         <div class="slide-card" id="slide-30">
             <h2 id="7부-rag와-신뢰성-강화-55-60장">7부: RAG와 신뢰성 강화 (55-60장)</h2>
 
-<h3 id="55-rag의-등장-llm의-단기-기억-상실증-해결">55. RAG의 등장: LLM의 단기 기억 상실증 해결</h3>
+<h1 id="55-rag의-등장-llm의-단기-기억-상실증-해결">55. RAG의 등장: LLM의 단기 기억 상실증 해결</h1>
 
 <p><strong>제목</strong>: "2024년 정보도 알려줄게" - 실시간 지식 주입</p>
 
@@ -1850,7 +1886,7 @@ Sourcegraph 엔지니어 Steve Yegge:</p>
 
         <!-- Slide 31 -->
         <div class="slide-card" id="slide-31">
-            <h3 id="56-벡터-db-ai의-새로운-기억-장치">56. 벡터 DB: AI의 새로운 기억 장치</h3>
+            <h1 id="56-벡터-db-ai의-새로운-기억-장치">56. 벡터 DB: AI의 새로운 기억 장치</h1>
 
 <p><strong>제목</strong>: 텍스트를 숫자로, 의미를 거리로</p>
 
@@ -1885,7 +1921,7 @@ Qdrant는 러스트로 작성되어 메모리 안정성과 성능을 보장합�
 
         <!-- Slide 32 -->
         <div class="slide-card" id="slide-32">
-            <h3 id="57-fine-tuning-vs-rag-선택의-기로">57. Fine-tuning vs RAG: 선택의 기로</h3>
+            <h1 id="57-fine-tuning-vs-rag-선택의-기로">57. Fine-tuning vs RAG: 선택의 기로</h1>
 
 <p><strong>제목</strong>: 맞춤 정장 vs 액세서리, 당신의 선택은?</p>
 
@@ -1934,7 +1970,7 @@ RAG = 물리학 교과서를 펴놓고 오픈북 시험 보는 것
 
         <!-- Slide 33 -->
         <div class="slide-card" id="slide-33">
-            <h3 id="58-프로덕션-rag-실전-구현의-함정들">58. 프로덕션 RAG: 실전 구현의 함정들</h3>
+            <h1 id="58-프로덕션-rag-실전-구현의-함정들">58. 프로덕션 RAG: 실전 구현의 함정들</h1>
 
 <p><strong>제목</strong>: "POC는 성공, 실서비스는 실패" 피하기</p>
 
@@ -1965,7 +2001,7 @@ RAG = 물리학 교과서를 펴놓고 오픈북 시험 보는 것
 
         <!-- Slide 34 -->
         <div class="slide-card" id="slide-34">
-            <h3 id="59-rag의-진화-2025년-최신-트렌드">59. RAG의 진화: 2025년 최신 트렌드</h3>
+            <h1 id="59-rag의-진화-2025년-최신-트렌드">59. RAG의 진화: 2025년 최신 트렌드</h1>
 
 <p><strong>단순 검색을 넘어 지능형 에이전트로</strong></p>
 
@@ -2003,7 +2039,7 @@ RAG와 에이전트의 경계는 사라지고 있습니다. RAG는 에이전트�
 
         <!-- Slide 35 -->
         <div class="slide-card" id="slide-35">
-            <h3 id="60-신뢰할-수-있는-ai-엔터프라이즈-요구사항">60. 신뢰할 수 있는 AI: 엔터프라이즈 요구사항</h3>
+            <h1 id="60-신뢰할-수-있는-ai-엔터프라이즈-요구사항">60. 신뢰할 수 있는 AI: 엔터프라이즈 요구사항</h1>
 
 <p><strong>제목</strong>: "99.9% 정확도로도 부족한 이유"</p>
 
@@ -2036,7 +2072,7 @@ RAG와 에이전트의 경계는 사라지고 있습니다. RAG는 에이전트�
 
         <!-- Slide 36 -->
         <div class="slide-card" id="slide-36">
-            <h3 id="61-xai-블랙박스를-열어라">61. XAI: 블랙박스를 열어라</h3>
+            <h1 id="61-xai-블랙박스를-열어라">61. XAI: 블랙박스를 열어라</h1>
 
 <p><strong>제목</strong>: "AI가 왜 그런 결정을 했는지 알 수 있을까?"</p>
 
@@ -2074,7 +2110,7 @@ RAG와 에이전트의 경계는 사라지고 있습니다. RAG는 에이전트�
 
         <!-- Slide 37 -->
         <div class="slide-card" id="slide-37">
-            <h3 id="62-컨텍스트-엔지니어링-stateless-ai에-기억을-주는-법">62. 컨텍스트 엔지니어링: Stateless AI에 기억을 주는 법</h3>
+            <h1 id="62-컨텍스트-엔지니어링-stateless-ai에-기억을-주는-법">62. 컨텍스트 엔지니어링: Stateless AI에 기억을 주는 법</h1>
 
 <p><strong>제목</strong>: "LLM은 기억이 없다, 그래서 우리가 환경을 만든다"</p>
 
@@ -2127,7 +2163,7 @@ RAG와 에이전트의 경계는 사라지고 있습니다. RAG는 에이전트�
         <div class="slide-card" id="slide-38">
             <h2 id="8부-agentic-ai와-최신-트렌드-63-73장">8부: Agentic AI와 최신 트렌드 (63-73장)</h2>
 
-<h3 id="63-ai-에이전트-어시스턴트에서-동료로">63. AI 에이전트: 어시스턴트에서 동료로</h3>
+<h1 id="63-ai-에이전트-어시스턴트에서-동료로">63. AI 에이전트: 어시스턴트에서 동료로</h1>
 
 <p><strong>제목</strong>: "시키는 일만 하던 AI가 스스로 일하기 시작했다"</p>
 
@@ -2181,7 +2217,7 @@ RAG와 에이전트의 경계는 사라지고 있습니다. RAG는 에이전트�
 
         <!-- Slide 39 -->
         <div class="slide-card" id="slide-39">
-            <h3 id="64-실전-에이전트-서비스-manus와-flowith">64. 실전 에이전트 서비스: Manus와 Flowith</h3>
+            <h1 id="64-실전-에이전트-서비스-manus와-flowith">64. 실전 에이전트 서비스: Manus와 Flowith</h1>
 
 <p><strong>제목</strong>: "AI 에이전트가 실제로 일하는 모습"</p>
 
@@ -2283,7 +2319,7 @@ RAG와 에이전트의 경계는 사라지고 있습니다. RAG는 에이전트�
 
         <!-- Slide 40 -->
         <div class="slide-card" id="slide-40">
-            <h3 id="65-코드-생성-ai-개발자의-새로운-동료">65. 코드 생성 AI: 개발자의 새로운 동료</h3>
+            <h1 id="65-코드-생성-ai-개발자의-새로운-동료">65. 코드 생성 AI: 개발자의 새로운 동료</h1>
 
 <p><strong>제목</strong>: "코딩의 미래: 설명하면 만들어진다"</p>
 
@@ -2316,7 +2352,7 @@ RAG와 에이전트의 경계는 사라지고 있습니다. RAG는 에이전트�
 
         <!-- Slide 41 -->
         <div class="slide-card" id="slide-41">
-            <h3 id="66-vibe-coding-프로그래밍의-새로운-패러다임">66. Vibe Coding: 프로그래밍의 새로운 패러다임</h3>
+            <h1 id="66-vibe-coding-프로그래밍의-새로운-패러다임">66. Vibe Coding: 프로그래밍의 새로운 패러다임</h1>
 
 <p><strong>제목</strong>: "느낌으로 코딩하기 - AI와 춤추는 개발"</p>
 
@@ -2375,7 +2411,7 @@ Vibe: 목표와 느낌 전달
 
         <!-- Slide 42 -->
         <div class="slide-card" id="slide-42">
-            <h3 id="67-증강-코딩-바이브를-넘어서">67. 증강 코딩: 바이브를 넘어서</h3>
+            <h1 id="67-증강-코딩-바이브를-넘어서">67. 증강 코딩: 바이브를 넘어서</h1>
 
 <p><strong>제목</strong>: "Augmented Coding - 체계적 AI 협업의 시작"</p>
 
@@ -2484,7 +2520,7 @@ Vibe: 목표와 느낌 전달
 
         <!-- Slide 43 -->
         <div class="slide-card" id="slide-43">
-            <h3 id="68-ai의-최신-트렌드-2025">68. AI의 최신 트렌드: 2025</h3>
+            <h1 id="68-ai의-최신-트렌드-2025">68. AI의 최신 트렌드: 2025</h1>
 
 <p><strong>제목</strong>: "매일 바뀌는 AI 트렌드, 핵심만 정리"</p>
 
@@ -2518,7 +2554,7 @@ Vibe: 목표와 느낌 전달
 
         <!-- Slide 44 -->
         <div class="slide-card" id="slide-44">
-            <h3 id="69-ops의-진화-devops에서-agentops까지">69. Ops의 진화: DevOps에서 AgentOps까지</h3>
+            <h1 id="69-ops의-진화-devops에서-agentops까지">69. Ops의 진화: DevOps에서 AgentOps까지</h1>
 
 <p><strong>제목</strong>: "코드 배포에서 AI 에이전트 군단 관리까지"</p>
 
@@ -2610,7 +2646,7 @@ AgentOps (2025~)
 - 자가 진단 AI 시스템<br />
 - 예측적 스케일링<br />
 - 자동 프롬프트 최적화<br />
-- 운영과 배포에도 자동화 도입</p>
+- "운영 없는 운영" 시대</p>
 
             
             <div class="page-info">
@@ -2624,7 +2660,7 @@ AgentOps (2025~)
 
         <!-- Slide 45 -->
         <div class="slide-card" id="slide-45">
-            <h3 id="70-산업별-ai-혁신-누가-먼저-뛰어들었나">70. 산업별 AI 혁신: 누가 먼저 뛰어들었나</h3>
+            <h1 id="70-산업별-ai-혁신-누가-먼저-뛰어들었나">70. 산업별 AI 혁신: 누가 먼저 뛰어들었나</h1>
 
 <p><strong>제목</strong>: "AI 도입 1등 산업 vs 꼴등 산업"</p>
 
@@ -2642,25 +2678,14 @@ AgentOps (2025~)
 
 <p><strong>리테일: 개인화 추천의 진화</strong></p>
 
-<p>Netflix Prize (2006-2009) - 추천 시스템의 혁명:<br />
-- 상금 $1M: 영화 평점 예측 정확도 10% 개선 도전<br />
-- 우승팀 BellKor's Pragmatic Chaos: 앙상블 기법으로 10.06% 개선<br />
-- 이후 추천 시스템이 빅테크의 핵심 경쟁력으로 부상</p>
+<p>무신사의 AI 추천 시스템:<br />
+- 하이브리드 접근: 콘텐츠 기반 + 협업 필터링<br />
+- 실시간 행동 분석: 클릭, 검색, 장바구니 데이터 활용<br />
+- 유사 취향 고객 분석으로 교차 추천</p>
 
-<p>Amazon의 추천 엔진 진화:<br />
-- "Customers who bought this also bought": 35% 매출 기여<br />
-- Item-to-Item Collaborative Filtering: 실시간 추천 가능<br />
-- 2019년 이후 딥러닝 기반 개인화로 전환</p>
-
-<p>Spotify Discover Weekly - 추천의 새로운 패러다임:<br />
-- 40M+ 사용자, 80% 이상 engagement rate<br />
-- Collaborative Filtering + NLP + Audio Feature 분석 결합<br />
-- 매주 월요일 30곡 개인화 플레이리스트로 음악 소비 혁신</p>
-
-<p>TikTok ForYou 알고리즘 - 중독성의 과학:<br />
-- 전 세계 10억+ 사용자, 일일 평균 사용 시간 95분<br />
-- 실시간 피드백 루프: 시청 시간, 좋아요, 공유, 스크롤 속도 분석<br />
-- 콜드 스타트 문제 해결: 신규 사용자도 8-10개 영상으로 취향 파악</p>
+<p>카카오스타일 (지그재그):<br />
+- AI 기반 체형 맞춤 스타일 추천<br />
+- AWS AI Day 해커톤 우수 사례 선정</p>
 
 <p><strong>헬스케어: AI 진단의 현실</strong></p>
 
@@ -2704,7 +2729,7 @@ AgentOps (2025~)
 
         <!-- Slide 46 -->
         <div class="slide-card" id="slide-46">
-            <h3 id="71-next-big-thing-agi로-가는-길">71. Next Big Thing: AGI로 가는 길</h3>
+            <h1 id="71-next-big-thing-agi로-가는-길">71. Next Big Thing: AGI로 가는 길</h1>
 
 <p><strong>제목</strong>: "DeepSeek 쇼크와 AGI 경쟁의 새로운 국면"</p>
 
@@ -2781,7 +2806,7 @@ AgentOps (2025~)
 
         <!-- Slide 47 -->
         <div class="slide-card" id="slide-47">
-            <h3 id="72-ai-하드웨어-전쟁-칩이-미래를-결정한다">72. AI 하드웨어 전쟁: 칩이 미래를 결정한다</h3>
+            <h1 id="72-ai-하드웨어-전쟁-칩이-미래를-결정한다">72. AI 하드웨어 전쟁: 칩이 미래를 결정한다</h1>
 
 <p><strong>제목</strong>: "GPU 부족에서 NPU 시대로 - AI 하드웨어 생태계"</p>
 
@@ -2889,7 +2914,7 @@ AI 하드웨어 시장에서 NVIDIA의 진정한 경쟁력은 GPU 자체가 아�
 
         <!-- Slide 48 -->
         <div class="slide-card" id="slide-48">
-            <h3 id="73-ai의-자기-개선-도구를-만드는-도구의-시대">73. AI의 자기 개선: 도구를 만드는 도구의 시대</h3>
+            <h1 id="73-ai의-자기-개선-도구를-만드는-도구의-시대">73. AI의 자기 개선: 도구를 만드는 도구의 시대</h1>
 
 <p><strong>제목</strong>: "AI가 스스로를 진화시키기 시작했다"</p>
 
