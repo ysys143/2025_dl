@@ -43,7 +43,7 @@
         /* Navigation */
         .nav-container {
             position: fixed;
-            top: 24px;
+            top: 33px;
             right: 24px;
             z-index: 40;
             display: flex;
@@ -52,9 +52,9 @@
         }
         
         .nav-button {
-            background: linear-gradient(135deg, #495057 0%, #6c757d 100%);
-            color: #fff;
-            border: none;
+            background: transparent;
+            color: #000;
+            border: 1px solid #000;
             border-radius: 0.125rem;
             padding: 12px 20px;
             font-size: 14px;
@@ -63,12 +63,14 @@
             transition: all 0.3s ease;
             display: block;
             width: auto;
-            box-shadow: 0 4px 16px rgba(108, 117, 125, 0.3);
+            box-shadow: none;
+            opacity: 0.6;
         }
         
         .nav-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(108, 117, 125, 0.4);
+            background: rgba(0, 0, 0, 0.05);
+            opacity: 1.0;
         }
         
         /* Progress Bar */
@@ -87,8 +89,8 @@
         .scroll-spy {
             position: fixed;
             left: 0;
-            top: 0;
-            bottom: 0;
+            top: 33px;
+            bottom: 33px;
             width: 192px;
             z-index: 40;
             display: flex;
@@ -97,19 +99,24 @@
         }
         
         .scroll-spy-item {
-            padding: 4px 8px;
+            padding: 2px 8px;
             cursor: pointer;
             transition: all 0.2s;
             font-size: 10px;
             line-height: 1.3;
             border-left: 2px solid transparent;
             color: #666;
+            box-sizing: border-box;
+            overflow: hidden;
+            font-style: italic;
+            opacity: 0.5;
         }
         
         .scroll-spy-item:hover {
             background: #f5f5f5;
             border-left-color: #ddd;
             color: #333;
+            opacity: 0.7;
         }
         
         .scroll-spy-item.active {
@@ -117,6 +124,7 @@
             border-left-color: #000;
             color: #000;
             font-weight: 500;
+            opacity: 1.0;
         }
         
         /* 번호 스타일 제거됨
@@ -134,28 +142,123 @@
         
         /* Slides */
         .lead-slide {
-            background: linear-gradient(135deg, #e5e5e7 0%, #d1d1d3 100%);
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 120, 120, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(160, 160, 160, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(200, 200, 200, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #f0f0f2 0%, #e8e8ea 25%, #d8d8da 50%, #c8c8ca 75%, #b8b8ba 100%);
             color: #fff;
             text-align: center;
-            padding: 150px 32px;
-            margin-bottom: 48px;
+            padding: 180px 48px;
+            margin-bottom: 64px;
             position: relative;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 20px 40px rgba(209, 209, 211, 0.3);
+            box-shadow: 
+                0 32px 64px rgba(0, 0, 0, 0.08),
+                0 16px 32px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
         }
         
-        .lead-slide h1, .lead-slide h2, .lead-slide h3, .lead-slide p, .lead-slide strong, .lead-slide code, .lead-slide ul, .lead-slide li {
+        .lead-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 70%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .lead-slide::after {
+            content: 'AI의 진화: 기계는 생각할 수 있는가?';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 120px;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.08);
+            word-wrap: break-word;
+            overflow: hidden;
+            line-height: 1.4;
+            letter-spacing: 0.1em;
+            filter: blur(2px);
+            pointer-events: none;
+            animation: text-flow 50s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes text-flow {
+            0% { transform: translateY(0%) rotate(0deg); }
+            100% { transform: translateY(-30%) rotate(1deg); }
+        }
+        
+        .lead-slide h1, .lead-slide h3, .lead-slide p, .lead-slide strong, .lead-slide code, .lead-slide ul, .lead-slide li {
             color: #fff !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .lead-slide h1 {
+            font-size: 18px !important;
+            font-weight: 400 !important;
+            color: #000 !important;
+            opacity: 0.7;
+            letter-spacing: 0.02em;
+            margin-bottom: 16px !important;
+            text-shadow: none !important;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 가장 강력한 CSS 선택자로 h2 스타일 강제 적용 */
+        body .main-container .content-wrapper .lead-slide h2,
+        html body .main-container .content-wrapper .lead-slide h2,
+        .lead-slide h2,
+        .lead-slide h2 *,
+        div.lead-slide h2,
+        .slide-card.lead-slide h2 {
+            font-size: 64px !important;
+            font-weight: 900 !important;
+            color: #000000 !important;
+            opacity: 1.0 !important;
+            letter-spacing: -0.02em !important;
+            margin: 24px 0 48px 0 !important;
+            text-shadow: 0 0 1px rgba(0,0,0,0.8) !important;
+            line-height: 1.2 !important;
+            background: none !important;
+            background-color: transparent !important;
+            -webkit-text-fill-color: #000000 !important;
+            -webkit-background-clip: unset !important;
+            background-clip: unset !important;
+            filter: none !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        .lead-slide p {
+            font-size: 24px !important;
+            font-weight: 300 !important;
+            opacity: 0.8;
+            letter-spacing: 0.01em;
+            line-height: 1.8;
         }
         
         /* strong 태그의 배경색 제거 */
         .lead-slide strong {
             background: none !important;
             padding: 0 !important;
+            font-weight: 600 !important;
         }
         
         .slide-card {
@@ -168,7 +271,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         
-        .slide-card h1, .slide-card h2, .slide-card h3, .slide-card p, .slide-card strong, .slide-card code, .slide-card ul, .slide-card li {
+        .slide-card p, .slide-card strong, .slide-card code, .slide-card ul, .slide-card li {
             color: #424245;
         }
         
@@ -180,25 +283,28 @@
         
         /* Typography */
         h1 {
-            font-size: 48px;
+            font-size: 64px;
             font-weight: 800;
-            margin-bottom: 24px;
+            margin-bottom: 48px;
             line-height: 1.1;
-            color: #007AFF;
+            color: #0064FF;
+            opacity: 0.8;
         }
         
-        h2 {
-            font-size: 32px;
+        .slide-card h2, .content-wrapper h2:not(.lead-slide h2) {
+            font-size: 48px;
             font-weight: 700;
-            margin: 32px 0 16px 0;
-            color: #007AFF;
+            margin: 24px 0 36px 0;
+            color: #0064FF;
+            opacity: 0.8;
         }
         
         h3 {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 600;
-            margin: 24px 0 12px 0;
-            color: #0051D5;
+            margin: 16px 0 28px 0;
+            color: #0064FF;
+            opacity: 0.8;
         }
         
         p {
@@ -401,24 +507,49 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
             height: 100%;
         }
         
+        /* 이미지 컨테이너 */
+        .image-container {
+            margin: 24px auto;
+            text-align: center;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            width: 50%;
+            max-width: 512px;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.02);
+        }
+        
         /* 링크 스타일 */
         a {
-            color: #007AFF;
+            color: #0064FF;
             text-decoration: none;
             border-bottom: 1px solid transparent;
             transition: all 0.2s;
         }
         
         a:hover {
-            border-bottom-color: #007AFF;
+            border-bottom-color: #0064FF;
         }
         
         .lead-slide a {
-            color: #40C8FF;
+            color: #0064FF;
         }
         
         .lead-slide a:hover {
-            border-bottom-color: #40C8FF;
+            border-bottom-color: #0064FF;
             transform: translateY(2px);
         }
     
@@ -549,11 +680,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Lead Slide 1 -->
         <div class="lead-slide" id="slide-1">
-            <h1 id="ai의-진화-기계는-생각할-수-있는가"><strong>AI의 진화: 기계는 생각할 수 있는가?</strong></h1>
-
-<p>위데이터랩 인공지능 트렌드 강연<br />
-Phase II: 현대 AI와 도전과제 (29-73장)</p>
-
+            <h1>위데이터랩 인공지능 트렌드 강연</h1>
+            <h2>Phase II: 현대 AI와 도전과제</h2>
             <p style="margin-top: 32px; opacity: 0.8;"><a href="#slide-2" style="color: inherit; text-decoration: none;">스크롤하여 계속 읽기 ↓</a></p>
         </div>
         
@@ -913,15 +1041,16 @@ Phase II: 현대 AI와 도전과제 (29-73장)</p>
 - 띄어쓰기 모호성: "아버지가방에들어가신다"<br />
 - 조사의 다양성: 은/는, 이/가, 을/를</p>
 
-<p><strong>한국 AI의 대응</strong>:<br />
-- KoBERT, KoGPT 개발<br />
-- 형태소 분석기 + Transformer<br />
-- 네이버 HyperCLOVA, 카카오 KoGPT</p>
+<p><strong>2025년 한국 AI 최신 모델</strong>:<br />
+- LG Exaone 3.0: 2조 토큰 학습, 한국어 특화<br />
+- 네이버 Clova-X: HyperCLOVA X 상용화<br />
+- 마인즈랩 믿음(MIDM) 2.0: 멀티모달 한국어 LLM<br />
+- SKT A.X 4.0: 통신 데이터 기반 특화 모델</p>
 
 <p><strong>성공 사례</strong>:<br />
-- 토스: 고객 상담 자동화<br />
-- 쿠팡: 상품 리뷰 분석<br />
-- 당근마켓: 부적절 게시글 필터링</p>
+- KB국민은행: AI 뱅커 활용 상담<br />
+- 삼성전자: 온디바이스 AI 한국어 지원<br />
+- 법무부: AI 법률 문서 분석 시스템</p>
 
             
             <div class="page-info">
@@ -1172,15 +1301,17 @@ Phase II: 현대 AI와 도전과제 (29-73장)</p>
 
         <!-- Slide 15 -->
         <div class="slide-card" id="slide-15">
-            <h1 id="42-nlp-민주화-no-code-ai-도구들">42. NLP 민주화: No-Code AI 도구들</h1>
+            <h1 id="42-nlp-접근성-향상-no-code-ai-도구들">42. NLP 접근성 향상: No-Code AI 도구들</h1>
 
 <p><strong>제목</strong>: 코딩 몰라도 AI 쓸 수 있다</p>
 
 <p><strong>대표적인 도구들</strong>:<br />
 - ChatGPT: 범용 대화형 AI<br />
-- Jasper: 마케팅 콘텐츠 생성<br />
-- Copy.ai: 카피라이팅 특화<br />
-- 뤼튼: 한국어 특화 AI</p>
+- Gemini: Google의 멀티모달 AI<br />
+- Claude: Anthropic의 안전한 AI<br />
+- Genspark: AI 검색 엔진<br />
+- Dify: AI 워크플로우 플랫폼<br />
+- Make: 노코드 RPA(업무 자동화) 도구</p>
 
 <p><strong>업무 자동화 사례</strong>:<br />
 - 이메일 초안 작성: 5분 → 30초<br />
@@ -1398,26 +1529,26 @@ Phase II: 현대 AI와 도전과제 (29-73장)</p>
 
         <!-- Slide 22 -->
         <div class="slide-card" id="slide-22">
-            <h1 id="49-오픈소스-llm의-경제적-영향-api-가격-전쟁의-시작">49. 오픈소스 LLM의 경제적 영향: API 가격 전쟁의 시작</h1>
+            <h1 id="49-오픈소스-llm의-동향">49. 오픈소스 LLM의 동향</h1>
 
-<p><strong>Llama 3 출시 후 시장 변화</strong>:<br />
-2024년 4월 18일 Meta가 Llama 3를 공개한 후 첫 주에만 120만 회 다운로드되었고, Hugging Face에 11,000개 이상의 파생 모델이 등록되었습니다.</p>
+<p><strong>2025년 오픈소스 LLM 최신 동향</strong>:<br />
+Meta Llama 3.1이 405B 파라미터로 GPT-4급 성능을 달성하며 오픈소스화. 보안 요구사항과 안정성 확보를 위해 기업들의 자체 LLM 구축이 급증하는 추세.</p>
 
-<p><strong>오픈소스 모델들</strong>:<br />
-- Meta Llama 시리즈<br />
-- Mistral, Mixtral<br />
-- 한국: Polyglot-Ko, SOLAR</p>
+<p><strong>2025년 주요 오픈소스 모델</strong>:<br />
+- Google Gemma 3: 2B~27B 모델, 모바일 최적화<br />
+- Alibaba Qwen 3.0: 다국어 지원 강화<br />
+- Mistral Large 2: 유럽 최고 성능 모델<br />
+- 한국: Exaone 3.0 오픈소스 버전 공개</p>
 
-<p><strong>왜 오픈소스가 중요한가</strong>:<br />
-- 기업 데이터 보안<br />
-- 커스터마이징 자유도<br />
-- 비용 절감 (API 대비)<br />
-- 커뮤니티 혁신 가속</p>
+<p><strong>API 가격 전쟁 결과</strong>:<br />
+- GPT-4 가격: $30/1M 토큰 → $3/1M 토큰<br />
+- Claude 3: $25/1M → $2.5/1M<br />
+- 오픈소스 셀프 호스팅: $0.1~0.5/1M</p>
 
-<p><strong>성공 사례</strong>:<br />
-- Alpaca: Stanford의 Llama 파인튜닝<br />
-- Vicuna: 저비용 고성능 달성<br />
-- 기업 맞춤형 모델 개발</p>
+<p><strong>기업 도입 사례</strong>:<br />
+- 삼성: 자체 LLM으로 연 1000억원 절감<br />
+- 현대차: 차량용 온디바이스 AI 구축<br />
+- 네이버: 검색 엔진 LLM 100% 자체화</p>
 
             
             <div class="page-info">
@@ -1719,6 +1850,12 @@ Sourcegraph 엔지니어 Steve Yegge:</p>
 - 1인당 수십~수백 개 에이전트 운영<br />
 - 대시보드 모니터링과 개입<br />
 - "목자가 양떼를 돌보듯" 에이전트 관리</p>
+
+<p></p>
+
+<div class="image-container">
+    <img src="https://cdn.prod.website-files.com/6750d0c3f154999a486dade7/67ddc78096f9b99f2e1e12c7_AD_4nXcOzNxtnxw6PVzSz1Kq4EcknDapFEhVWZFNvy8_Dgud2owjYaIJRkEJxdbWq_5KB_lVlp8dCswV0__AD8yaE5OBjUitjO5AmlBMerE7WGvbC20HRUSv17YDGfD-QMfQcUHQ1Nc.avif" alt="이미지" loading="lazy" />
+</div>
 
 <p><strong>멀티에이전트 아키텍처</strong>:<br />
 <div class="code-block-wrapper"><div class="highlight" style="background: #272822"><pre style="line-height: 125%;"><span></span>개발자 (오케스트레이터)
@@ -2591,14 +2728,15 @@ AgentOps (2025~)
 
 <p><strong>리테일: 개인화 추천의 진화</strong></p>
 
+<p>Netflix Prize (2006-2009):<br />
+- 추천 시스템 역사의 전환점<br />
+- 100만 달러 상금으로 알고리즘 혁신 촉진<br />
+- 협업 필터링과 행렬 분해 기법 발전</p>
+
 <p>무신사의 AI 추천 시스템:<br />
 - 하이브리드 접근: 콘텐츠 기반 + 협업 필터링<br />
 - 실시간 행동 분석: 클릭, 검색, 장바구니 데이터 활용<br />
 - 유사 취향 고객 분석으로 교차 추천</p>
-
-<p>카카오스타일 (지그재그):<br />
-- AI 기반 체형 맞춤 스타일 추천<br />
-- AWS AI Day 해커톤 우수 사례 선정</p>
 
 <p><strong>헬스케어: AI 진단의 현실</strong></p>
 
@@ -2951,6 +3089,101 @@ AlphaEvolve와 같은 시스템은 인간의 개입 없이도<br />
         </footer>
         </div>
     </div>
+    
+        <script>
+        // 스크롤로 이전/다음 파트 이동
+        (function() {
+            let hasTriggeredNext = false;
+            let hasTriggeredPrev = false;
+            let isAtBottom = false;
+            let isAtTop = false;
+            
+            function checkScrollPosition() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 5;
+                const scrolledToTop = scrollTop <= 5;
+                
+                // 페이지 끝에 도달
+                if (scrolledToBottom && !hasTriggeredNext && 'slides_part3_continuous.html' && 'slides_part3_continuous.html' !== 'None') {
+                    isAtBottom = true;
+                    // 페이지 끝에 도달했을 때 안내 메시지 표시
+                    if (!document.getElementById('scrollHintBottom')) {
+                        const hint = document.createElement('div');
+                        hint.id = 'scrollHintBottom';
+                        hint.style.cssText = 'position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0, 100, 255, 0.9); color: white; padding: 16px 32px; border-radius: 50px; font-weight: 600; z-index: 1000; transition: opacity 0.3s ease;';
+                        hint.textContent = '계속 스크롤하여 다음 파트로 이동';
+                        document.body.appendChild(hint);
+                        
+                        setTimeout(() => {
+                            hint.style.opacity = '0';
+                            setTimeout(() => hint.remove(), 300);
+                        }, 3000);
+                    }
+                } else if (!scrolledToBottom) {
+                    isAtBottom = false;
+                    hasTriggeredNext = false;
+                }
+                
+                // 페이지 맨 위에 도달
+                if (scrolledToTop && !hasTriggeredPrev && 'slides_part1_continuous.html' && 'slides_part1_continuous.html' !== 'None') {
+                    isAtTop = true;
+                    // 페이지 맨 위에 도달했을 때 안내 메시지 표시
+                    if (!document.getElementById('scrollHintTop')) {
+                        const hint = document.createElement('div');
+                        hint.id = 'scrollHintTop';
+                        hint.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(108, 117, 125, 0.9); color: white; padding: 16px 32px; border-radius: 50px; font-weight: 600; z-index: 1000; transition: opacity 0.3s ease;';
+                        hint.textContent = '계속 스크롤하여 이전 파트로 이동';
+                        document.body.appendChild(hint);
+                        
+                        setTimeout(() => {
+                            hint.style.opacity = '0';
+                            setTimeout(() => hint.remove(), 300);
+                        }, 3000);
+                    }
+                } else if (!scrolledToTop) {
+                    isAtTop = false;
+                    hasTriggeredPrev = false;
+                }
+            }
+            
+            // 휠 이벤트로 페이지 끝/시작에서 추가 스크롤 감지
+            window.addEventListener('wheel', function(e) {
+                // 아래로 스크롤 - 다음 파트로 이동
+                if (isAtBottom && e.deltaY > 0 && !hasTriggeredNext && 'slides_part3_continuous.html' && 'slides_part3_continuous.html' !== 'None') {
+                    hasTriggeredNext = true;
+                    setTimeout(() => {
+                        window.location.href = 'slides_part3_continuous.html';
+                    }, 300);
+                }
+                
+                // 위로 스크롤 - 이전 파트로 이동
+                if (isAtTop && e.deltaY < 0 && !hasTriggeredPrev && 'slides_part1_continuous.html' && 'slides_part1_continuous.html' !== 'None') {
+                    hasTriggeredPrev = true;
+                    setTimeout(() => {
+                        // 이전 페이지의 맨 아래로 이동
+                        window.location.href = 'slides_part1_continuous.html#scroll-to-bottom';
+                    }, 300);
+                }
+            });
+            
+            window.addEventListener('scroll', checkScrollPosition);
+            
+            // URL에 #scroll-to-bottom이 있으면 페이지 맨 아래로 스크롤
+            if (window.location.hash === '#scroll-to-bottom') {
+                setTimeout(() => {
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    // 해시 제거
+                    history.replaceState(null, null, window.location.pathname);
+                }, 100);
+            }
+            
+            // 초기 체크
+            checkScrollPosition();
+        })();
+        </script>
+        
 
     <script>
         function scrollToTop() {
@@ -3001,14 +3234,58 @@ AlphaEvolve와 같은 시스템은 인간의 개입 없이도<br />
             const scrollSpyList = document.getElementById('scrollSpyList');
             const scrollSpy = document.getElementById('scrollSpy');
             
-            // Calculate optimal line height based on number of slides
-            const containerHeight = window.innerHeight;
-            const slideCount = slides.length;
-            const padding = 32; // top and bottom padding
-            const availableHeight = containerHeight - padding;
-            const itemHeight = Math.max(availableHeight / slideCount, 20); // minimum 20px per item
+            function calculateDynamicSizes() {
+                const containerHeight = window.innerHeight;
+                const slideCount = slides.length;
+                const padding = 66; // top (33px) and bottom (33px) padding to match nav buttons
+                const availableHeight = containerHeight - padding;
+                
+                // Calculate optimal item height (minimum 16px, maximum 30px)
+                let itemHeight = Math.max(Math.min(availableHeight / slideCount, 30), 16);
+                
+                // Calculate font size based on item height
+                let fontSize = Math.max(Math.min(itemHeight * 0.6, 12), 8);
+                
+                // Calculate line height
+                let lineHeight = itemHeight * 0.8;
+                
+                // If items still don't fit, reduce further
+                const totalRequiredHeight = itemHeight * slideCount;
+                if (totalRequiredHeight > availableHeight) {
+                    const scaleFactor = availableHeight / totalRequiredHeight;
+                    itemHeight *= scaleFactor;
+                    fontSize *= scaleFactor;
+                    lineHeight *= scaleFactor;
+                }
+                
+                return {
+                    itemHeight: Math.max(itemHeight, 12), // absolute minimum
+                    fontSize: Math.max(fontSize, 7), // absolute minimum
+                    lineHeight: Math.max(lineHeight, 10) // absolute minimum
+                };
+            }
+            
+            function updateScrollSpySizes() {
+                const sizes = calculateDynamicSizes();
+                document.querySelectorAll('.scroll-spy-item').forEach((item, index) => {
+                    item.style.height = sizes.itemHeight + 'px';
+                    item.style.fontSize = sizes.fontSize + 'px';
+                    item.style.lineHeight = sizes.lineHeight + 'px';
+                    
+                    // Update title text for screen size
+                    const slide = slides[index];
+                    if (slide) {
+                        const slideTitle = getSlideTitle(slide);
+                        const span = item.querySelector('span');
+                        if (span) {
+                            span.textContent = slideTitle;
+                        }
+                    }
+                });
+            }
             
             // Generate scroll spy items
+            const initialSizes = calculateDynamicSizes();
             slides.forEach((slide, index) => {
                 const slideNumber = slide.id.replace('slide-', '');
                 const slideTitle = getSlideTitle(slide);
@@ -3016,7 +3293,9 @@ AlphaEvolve와 같은 시스템은 인간의 개입 없이도<br />
                 const spyItem = document.createElement('div');
                 spyItem.className = 'scroll-spy-item';
                 spyItem.setAttribute('data-slide', slide.id);
-                spyItem.style.height = itemHeight + 'px';
+                spyItem.style.height = initialSizes.itemHeight + 'px';
+                spyItem.style.fontSize = initialSizes.fontSize + 'px';
+                spyItem.style.lineHeight = initialSizes.lineHeight + 'px';
                 spyItem.style.display = 'flex';
                 spyItem.style.alignItems = 'center';
                 spyItem.innerHTML = `
@@ -3054,33 +3333,42 @@ AlphaEvolve와 같은 시스템은 인간의 개입 없이도<br />
                 spyObserver.observe(slide);
             });
             
-            // Handle window resize
+            // Handle window resize with debouncing
+            let resizeTimeout;
             window.addEventListener('resize', () => {
-                const newHeight = window.innerHeight;
-                const newItemHeight = Math.max((newHeight - padding) / slideCount, 20);
-                document.querySelectorAll('.scroll-spy-item').forEach(item => {
-                    item.style.height = newItemHeight + 'px';
-                });
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    updateScrollSpySizes();
+                }, 100);
             });
         }
         
         function getSlideTitle(slide) {
+            // Calculate max title length based on screen size
+            const screenWidth = window.innerWidth;
+            let maxLength = 35;
+            
+            if (screenWidth < 1200) maxLength = 25;
+            if (screenWidth < 1000) maxLength = 20;
+            if (screenWidth < 800) maxLength = 15;
+            
             // Try to get the first heading or first few words of content
             const heading = slide.querySelector('h1, h2, h3');
             if (heading) {
                 const text = heading.textContent.trim();
-                return text.length > 35 ? text.substring(0, 35) + '...' : text;
+                return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
             }
             
             // If no heading, get first paragraph
             const firstPara = slide.querySelector('p');
             if (firstPara) {
                 const text = firstPara.textContent.trim();
-                return text.length > 35 ? text.substring(0, 35) + '...' : text;
+                return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
             }
             
             return 'Slide';
         }
+        
     </script>
 </body>
 </html>

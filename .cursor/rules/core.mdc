@@ -1,0 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+테스트 시 다음 코드 사용
+
+python convert_to_continuous.py markdown html

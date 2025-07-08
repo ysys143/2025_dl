@@ -9,12 +9,14 @@ backgroundColor: #fff
 # **AI의 진화: 기계는 생각할 수 있는가?**
 
 위데이터랩 인공지능 트렌드 강연
-Phase I: AI의 기원과 진화 (1-28장)
+Phase I: AI의 기원과 진화
 
 ---
 
 # 1. 강연 개요와 핵심 질문
 **"기계는 생각할 수 있는가?" - AI의 출발점이 된 철학적 물음**
+
+![image.png](https://mediadepot.fra1.cdn.digitaloceanspaces.com/pkm24/Image/Job-100041/ResizeSet/Size-1200/k-7-12-for-about-alan-317.jpg)
 
 위데이터랩 인공지능 트렌드 강연에 오신 것을 환영합니다. 
 

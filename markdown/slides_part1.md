@@ -3,18 +3,21 @@
 
 ---
 
-## Phase I: AI의 기원과 진화 (1-28장)
+## Phase I: AI의 기원과 진화 
 
 ---
 
 ### 1. 강연 개요와 핵심 질문
 **"기계는 생각할 수 있는가?" - AI의 출발점이 된 철학적 물음**
 
+
 위데이터랩 인공지능 트렌드 강연에 오신 것을 환영합니다. 
 
 오늘 우리는 1950년 앨런 튜링이 던진 이 질문에서 시작하여, 현재 Agentic AI까지의 여정을 탐험합니다. 이 질문은 단순한 철학적 사유를 넘어 인공지능 연구의 근본적 동기가 되었으며, 70년이 지난 지금도 여전히 우리에게 중요한 의미를 던지고 있습니다.
 
 위데이터랩은 DB 모니터링에서 시작하여 RAG/Agent 관찰성, YOLO 결함 탐지, 온프레미스 AI 플랫폼까지 다양한 AI 프로젝트를 수행하며 데이터와 AI로 고객의 가치를 창출하는 기업입니다.
+
+https://manhattanrarebooks.cdn.bibliopolis.com/pictures/227.jpg?auto=webp&v=1354507081
 
 ---
 
@@ -29,6 +32,8 @@
 - 이는 AI 목표 설정의 첫 번째 구체적인 이정표가 됨
 
 이 테스트는 완벽하지 않지만, 인공지능이 추구해야 할 방향을 제시했습니다.
+
+https://flexible.img.hani.co.kr/flexible/normal/661/504/imgdb/original/2025/0407/20250407500536.jpg 
 
 ---
 
@@ -46,6 +51,9 @@
 사이버네틱스는 학습을 "시스템이 피드백을 통해 행동을 개선하는 과정"으로 정의했고, 이는 현재 강화학습의 기초가 되었습니다. 또한 인간-기계 상호작용, 적응 시스템, 자기 조직화 같은 개념들이 후에 AI 연구의 중요한 주제가 되었습니다.
 
 위너의 동료였던 클로드 섀넌(정보이론), 워런 맥컬록(인공 뉴런)도 사이버네틱스 운동에 참여했으며, 이들의 아이디어는 다트머스 회의로 이어졌습니다.
+
+https://upload.wikimedia.org/wikipedia/commons/3/33/Cybernetics.jpg
+
 
 ---
 
@@ -68,6 +76,9 @@
 
 이들은 인간 사고의 원리를 수학과 논리로 완전히 모델링할 수 있다고 믿었습니다.
 
+
+https://spectrum.ieee.org/media-library/historical-photo-of-seven-smiling-men-sitting-on-a-lawn-in-front-of-a-tree-and-a-white-school-building-with-many-windows.jpg?id=33603743&width=1200&height=600&coordinates=0%2C0%2C0%2C30 
+
 ---
 
 ### 6. 생물학적 영감: 맥컬록-피츠의 인공 뉴런 (1943)
@@ -81,6 +92,9 @@
 - 단순한 단위들의 연결로 복잡한 계산 가능
 
 이 모델은 단순했지만, 생물학적 시스템을 인공적으로 구현할 수 있다는 가능성을 보여준 획기적인 시도였습니다. 현대 딥러닝의 기초가 되는 개념입니다.
+
+https://cdn.prod.website-files.com/60ab0571dc2b4b3a7165c912/67077d28fe3b63556b9ba734_6183c8f6580ea54efd7391e5_a%2520logical%2520calculus.jpeg :=big
+
 
 ---
 

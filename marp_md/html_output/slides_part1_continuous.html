@@ -89,8 +89,8 @@
         .scroll-spy {
             position: fixed;
             left: 0;
-            top: 0;
-            bottom: 0;
+            top: 33px;
+            bottom: 33px;
             width: 192px;
             z-index: 40;
             display: flex;
@@ -142,28 +142,123 @@
         
         /* Slides */
         .lead-slide {
-            background: linear-gradient(135deg, #e5e5e7 0%, #d1d1d3 100%);
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 120, 120, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(160, 160, 160, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(200, 200, 200, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #f0f0f2 0%, #e8e8ea 25%, #d8d8da 50%, #c8c8ca 75%, #b8b8ba 100%);
             color: #fff;
             text-align: center;
-            padding: 150px 32px;
-            margin-bottom: 48px;
+            padding: 180px 48px;
+            margin-bottom: 64px;
             position: relative;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 20px 40px rgba(209, 209, 211, 0.3);
+            box-shadow: 
+                0 32px 64px rgba(0, 0, 0, 0.08),
+                0 16px 32px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
         }
         
-        .lead-slide h1, .lead-slide h2, .lead-slide h3, .lead-slide p, .lead-slide strong, .lead-slide code, .lead-slide ul, .lead-slide li {
+        .lead-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 70%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .lead-slide::after {
+            content: 'AI의 진화: 기계는 생각할 수 있는가?';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 120px;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.08);
+            word-wrap: break-word;
+            overflow: hidden;
+            line-height: 1.4;
+            letter-spacing: 0.1em;
+            filter: blur(2px);
+            pointer-events: none;
+            animation: text-flow 50s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes text-flow {
+            0% { transform: translateY(0%) rotate(0deg); }
+            100% { transform: translateY(-30%) rotate(1deg); }
+        }
+        
+        .lead-slide h1, .lead-slide h3, .lead-slide p, .lead-slide strong, .lead-slide code, .lead-slide ul, .lead-slide li {
             color: #fff !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .lead-slide h1 {
+            font-size: 18px !important;
+            font-weight: 400 !important;
+            color: #000 !important;
+            opacity: 0.7;
+            letter-spacing: 0.02em;
+            margin-bottom: 16px !important;
+            text-shadow: none !important;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 가장 강력한 CSS 선택자로 h2 스타일 강제 적용 */
+        body .main-container .content-wrapper .lead-slide h2,
+        html body .main-container .content-wrapper .lead-slide h2,
+        .lead-slide h2,
+        .lead-slide h2 *,
+        div.lead-slide h2,
+        .slide-card.lead-slide h2 {
+            font-size: 64px !important;
+            font-weight: 900 !important;
+            color: #000000 !important;
+            opacity: 1.0 !important;
+            letter-spacing: -0.02em !important;
+            margin: 24px 0 48px 0 !important;
+            text-shadow: 0 0 1px rgba(0,0,0,0.8) !important;
+            line-height: 1.2 !important;
+            background: none !important;
+            background-color: transparent !important;
+            -webkit-text-fill-color: #000000 !important;
+            -webkit-background-clip: unset !important;
+            background-clip: unset !important;
+            filter: none !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        .lead-slide p {
+            font-size: 24px !important;
+            font-weight: 300 !important;
+            opacity: 0.8;
+            letter-spacing: 0.01em;
+            line-height: 1.8;
         }
         
         /* strong 태그의 배경색 제거 */
         .lead-slide strong {
             background: none !important;
             padding: 0 !important;
+            font-weight: 600 !important;
         }
         
         .slide-card {
@@ -176,7 +271,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         
-        .slide-card h1, .slide-card h2, .slide-card h3, .slide-card p, .slide-card strong, .slide-card code, .slide-card ul, .slide-card li {
+        .slide-card p, .slide-card strong, .slide-card code, .slide-card ul, .slide-card li {
             color: #424245;
         }
         
@@ -188,25 +283,28 @@
         
         /* Typography */
         h1 {
-            font-size: 48px;
+            font-size: 64px;
             font-weight: 800;
-            margin-bottom: 24px;
+            margin-bottom: 48px;
             line-height: 1.1;
-            color: #4EBFFF;
+            color: #0064FF;
+            opacity: 0.8;
         }
         
-        h2 {
-            font-size: 32px;
+        .slide-card h2, .content-wrapper h2:not(.lead-slide h2) {
+            font-size: 48px;
             font-weight: 700;
-            margin: 32px 0 16px 0;
-            color: #4EBFFF;
+            margin: 24px 0 36px 0;
+            color: #0064FF;
+            opacity: 0.8;
         }
         
         h3 {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 600;
-            margin: 24px 0 12px 0;
-            color: #5FC7FF;
+            margin: 16px 0 28px 0;
+            color: #0064FF;
+            opacity: 0.8;
         }
         
         p {
@@ -409,24 +507,74 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
             height: 100%;
         }
         
+        /* 이미지 컨테이너 */
+        .image-container {
+            margin: 24px auto;
+            text-align: center;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            width: 50%;
+            max-width: 512px;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.02);
+        }
+        
+        /* 큰 이미지 컨테이너 (:=big 옵션) */
+        .image-container-big {
+            margin: 24px auto;
+            text-align: center;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .image-container-big img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container-big:hover img {
+            transform: scale(1.02);
+        }
+        
         /* 링크 스타일 */
         a {
-            color: #4EBFFF;
+            color: #0064FF;
             text-decoration: none;
             border-bottom: 1px solid transparent;
             transition: all 0.2s;
         }
         
         a:hover {
-            border-bottom-color: #4EBFFF;
+            border-bottom-color: #0064FF;
         }
         
         .lead-slide a {
-            color: #5FC7FF;
+            color: #0064FF;
         }
         
         .lead-slide a:hover {
-            border-bottom-color: #5FC7FF;
+            border-bottom-color: #0064FF;
             transform: translateY(2px);
         }
     
@@ -557,11 +705,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
         <!-- Lead Slide 1 -->
         <div class="lead-slide" id="slide-1">
-            <h1 id="ai의-진화-기계는-생각할-수-있는가"><strong>AI의 진화: 기계는 생각할 수 있는가?</strong></h1>
-
-<p>위데이터랩 인공지능 트렌드 강연<br />
-Phase I: AI의 기원과 진화 (1-28장)</p>
-
+            <h1>위데이터랩 인공지능 트렌드 강연</h1>
+            <h2>Phase I: AI의 기원과 진화</h2>
             <p style="margin-top: 32px; opacity: 0.8;"><a href="#slide-2" style="color: inherit; text-decoration: none;">스크롤하여 계속 읽기 ↓</a></p>
         </div>
         
@@ -572,6 +717,12 @@ Phase I: AI의 기원과 진화 (1-28장)</p>
             <h1 id="1-강연-개요와-핵심-질문">1. 강연 개요와 핵심 질문</h1>
 
 <p><strong>"기계는 생각할 수 있는가?" - AI의 출발점이 된 철학적 물음</strong></p>
+
+<p></p>
+
+<div class="image-container">
+    <img src="https://mediadepot.fra1.cdn.digitaloceanspaces.com/pkm24/Image/Job-100041/ResizeSet/Size-1200/k-7-12-for-about-alan-317.jpg" alt="image.png" loading="lazy" />
+</div>
 
 <p>위데이터랩 인공지능 트렌드 강연에 오신 것을 환영합니다. </p>
 
@@ -1389,6 +1540,101 @@ ELIZA: &quot;아무도 당신을 이해하지 못한다는 것에 대해 더 말
         </footer>
         </div>
     </div>
+    
+        <script>
+        // 스크롤로 이전/다음 파트 이동
+        (function() {
+            let hasTriggeredNext = false;
+            let hasTriggeredPrev = false;
+            let isAtBottom = false;
+            let isAtTop = false;
+            
+            function checkScrollPosition() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 5;
+                const scrolledToTop = scrollTop <= 5;
+                
+                // 페이지 끝에 도달
+                if (scrolledToBottom && !hasTriggeredNext && 'slides_part2_continuous.html' && 'slides_part2_continuous.html' !== 'None') {
+                    isAtBottom = true;
+                    // 페이지 끝에 도달했을 때 안내 메시지 표시
+                    if (!document.getElementById('scrollHintBottom')) {
+                        const hint = document.createElement('div');
+                        hint.id = 'scrollHintBottom';
+                        hint.style.cssText = 'position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0, 100, 255, 0.9); color: white; padding: 16px 32px; border-radius: 50px; font-weight: 600; z-index: 1000; transition: opacity 0.3s ease;';
+                        hint.textContent = '계속 스크롤하여 다음 파트로 이동';
+                        document.body.appendChild(hint);
+                        
+                        setTimeout(() => {
+                            hint.style.opacity = '0';
+                            setTimeout(() => hint.remove(), 300);
+                        }, 3000);
+                    }
+                } else if (!scrolledToBottom) {
+                    isAtBottom = false;
+                    hasTriggeredNext = false;
+                }
+                
+                // 페이지 맨 위에 도달
+                if (scrolledToTop && !hasTriggeredPrev && 'None' && 'None' !== 'None') {
+                    isAtTop = true;
+                    // 페이지 맨 위에 도달했을 때 안내 메시지 표시
+                    if (!document.getElementById('scrollHintTop')) {
+                        const hint = document.createElement('div');
+                        hint.id = 'scrollHintTop';
+                        hint.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(108, 117, 125, 0.9); color: white; padding: 16px 32px; border-radius: 50px; font-weight: 600; z-index: 1000; transition: opacity 0.3s ease;';
+                        hint.textContent = '계속 스크롤하여 이전 파트로 이동';
+                        document.body.appendChild(hint);
+                        
+                        setTimeout(() => {
+                            hint.style.opacity = '0';
+                            setTimeout(() => hint.remove(), 300);
+                        }, 3000);
+                    }
+                } else if (!scrolledToTop) {
+                    isAtTop = false;
+                    hasTriggeredPrev = false;
+                }
+            }
+            
+            // 휠 이벤트로 페이지 끝/시작에서 추가 스크롤 감지
+            window.addEventListener('wheel', function(e) {
+                // 아래로 스크롤 - 다음 파트로 이동
+                if (isAtBottom && e.deltaY > 0 && !hasTriggeredNext && 'slides_part2_continuous.html' && 'slides_part2_continuous.html' !== 'None') {
+                    hasTriggeredNext = true;
+                    setTimeout(() => {
+                        window.location.href = 'slides_part2_continuous.html';
+                    }, 300);
+                }
+                
+                // 위로 스크롤 - 이전 파트로 이동
+                if (isAtTop && e.deltaY < 0 && !hasTriggeredPrev && 'None' && 'None' !== 'None') {
+                    hasTriggeredPrev = true;
+                    setTimeout(() => {
+                        // 이전 페이지의 맨 아래로 이동
+                        window.location.href = 'None#scroll-to-bottom';
+                    }, 300);
+                }
+            });
+            
+            window.addEventListener('scroll', checkScrollPosition);
+            
+            // URL에 #scroll-to-bottom이 있으면 페이지 맨 아래로 스크롤
+            if (window.location.hash === '#scroll-to-bottom') {
+                setTimeout(() => {
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    // 해시 제거
+                    history.replaceState(null, null, window.location.pathname);
+                }, 100);
+            }
+            
+            // 초기 체크
+            checkScrollPosition();
+        })();
+        </script>
+        
 
     <script>
         function scrollToTop() {
@@ -1442,7 +1688,7 @@ ELIZA: &quot;아무도 당신을 이해하지 못한다는 것에 대해 더 말
             function calculateDynamicSizes() {
                 const containerHeight = window.innerHeight;
                 const slideCount = slides.length;
-                const padding = 32; // top and bottom padding
+                const padding = 66; // top (33px) and bottom (33px) padding to match nav buttons
                 const availableHeight = containerHeight - padding;
                 
                 // Calculate optimal item height (minimum 16px, maximum 30px)
@@ -1573,6 +1819,7 @@ ELIZA: &quot;아무도 당신을 이해하지 못한다는 것에 대해 더 말
             
             return 'Slide';
         }
+        
     </script>
 </body>
 </html>

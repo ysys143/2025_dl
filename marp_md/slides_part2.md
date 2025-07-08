@@ -9,7 +9,7 @@ backgroundColor: #fff
 # **AI의 진화: 기계는 생각할 수 있는가?**
 
 위데이터랩 인공지능 트렌드 강연
-Phase II: 현대 AI와 도전과제 (29-73장)
+Phase II: 현대 AI와 도전과제
 
 ---
 
@@ -295,15 +295,16 @@ Query(cat) × Key(모든 단어) = Attention Score
 - 띄어쓰기 모호성: "아버지가방에들어가신다"
 - 조사의 다양성: 은/는, 이/가, 을/를
 
-**한국 AI의 대응**:
-- KoBERT, KoGPT 개발
-- 형태소 분석기 + Transformer
-- 네이버 HyperCLOVA, 카카오 KoGPT
+**2025년 한국 AI 최신 모델**:
+- LG Exaone 3.0: 2조 토큰 학습, 한국어 특화
+- 네이버 Clova-X: HyperCLOVA X 상용화
+- 마인즈랩 믿음(MIDM) 2.0: 멀티모달 한국어 LLM
+- SKT A.X 4.0: 통신 데이터 기반 특화 모델
 
 **성공 사례**:
-- 토스: 고객 상담 자동화
-- 쿠팡: 상품 리뷰 분석
-- 당근마켓: 부적절 게시글 필터링
+- KB국민은행: AI 뱅커 활용 상담
+- 삼성전자: 온디바이스 AI 한국어 지원
+- 법무부: AI 법률 문서 분석 시스템
 
 ---
 
@@ -492,15 +493,17 @@ AI 오픈소스의 성지:
 
 ---
 
-# 42. NLP 민주화: No-Code AI 도구들
+# 42. NLP 접근성 향상: No-Code AI 도구들
 
 **제목**: 코딩 몰라도 AI 쓸 수 있다
 
 **대표적인 도구들**:
 - ChatGPT: 범용 대화형 AI
-- Jasper: 마케팅 콘텐츠 생성
-- Copy.ai: 카피라이팅 특화
-- 뤼튼: 한국어 특화 AI
+- Gemini: Google의 멀티모달 AI
+- Claude: Anthropic의 안전한 AI
+- Genspark: AI 검색 엔진
+- Dify: AI 워크플로우 플랫폼
+- Make: 노코드 RPA(업무 자동화) 도구
 
 **업무 자동화 사례**:
 - 이메일 초안 작성: 5분 → 30초
@@ -648,26 +651,26 @@ AI 오픈소스의 성지:
 
 ---
 
-# 49. 오픈소스 LLM의 경제적 영향: API 가격 전쟁의 시작
+# 49. 오픈소스 LLM의 동향
 
-**Llama 3 출시 후 시장 변화**:
-2024년 4월 18일 Meta가 Llama 3를 공개한 후 첫 주에만 120만 회 다운로드되었고, Hugging Face에 11,000개 이상의 파생 모델이 등록되었습니다.
+**2025년 오픈소스 LLM 최신 동향**:
+Meta Llama 3.1이 405B 파라미터로 GPT-4급 성능을 달성하며 오픈소스화. 보안 요구사항과 안정성 확보를 위해 기업들의 자체 LLM 구축이 급증하는 추세.
 
-**오픈소스 모델들**:
-- Meta Llama 시리즈
-- Mistral, Mixtral
-- 한국: Polyglot-Ko, SOLAR
+**2025년 주요 오픈소스 모델**:
+- Google Gemma 3: 2B~27B 모델, 모바일 최적화
+- Alibaba Qwen 3.0: 다국어 지원 강화
+- Mistral Large 2: 유럽 최고 성능 모델
+- 한국: Exaone 3.0 오픈소스 버전 공개
 
-**왜 오픈소스가 중요한가**:
-- 기업 데이터 보안
-- 커스터마이징 자유도
-- 비용 절감 (API 대비)
-- 커뮤니티 혁신 가속
+**API 가격 전쟁 결과**:
+- GPT-4 가격: $30/1M 토큰 → $3/1M 토큰
+- Claude 3: $25/1M → $2.5/1M
+- 오픈소스 셀프 호스팅: $0.1~0.5/1M
 
-**성공 사례**:
-- Alpaca: Stanford의 Llama 파인튜닝
-- Vicuna: 저비용 고성능 달성
-- 기업 맞춤형 모델 개발
+**기업 도입 사례**:
+- 삼성: 자체 LLM으로 연 1000억원 절감
+- 현대차: 차량용 온디바이스 AI 구축
+- 네이버: 검색 엔진 LLM 100% 자체화
 
 ---
 
@@ -887,6 +890,8 @@ Sourcegraph 엔지니어 Steve Yegge:
 - 1인당 수십~수백 개 에이전트 운영
 - 대시보드 모니터링과 개입
 - "목자가 양떼를 돌보듯" 에이전트 관리
+
+https://cdn.prod.website-files.com/6750d0c3f154999a486dade7/67ddc78096f9b99f2e1e12c7_AD_4nXcOzNxtnxw6PVzSz1Kq4EcknDapFEhVWZFNvy8_Dgud2owjYaIJRkEJxdbWq_5KB_lVlp8dCswV0__AD8yaE5OBjUitjO5AmlBMerE7WGvbC20HRUSv17YDGfD-QMfQcUHQ1Nc.avif
 
 **멀티에이전트 아키텍처**:
 ```
@@ -1577,14 +1582,15 @@ if trace.total_cost > 0.5:  # $0.5 이상
 
 **리테일: 개인화 추천의 진화**
 
+Netflix Prize (2006-2009):
+- 추천 시스템 역사의 전환점
+- 100만 달러 상금으로 알고리즘 혁신 촉진
+- 협업 필터링과 행렬 분해 기법 발전
+
 무신사의 AI 추천 시스템:
 - 하이브리드 접근: 콘텐츠 기반 + 협업 필터링
 - 실시간 행동 분석: 클릭, 검색, 장바구니 데이터 활용
 - 유사 취향 고객 분석으로 교차 추천
-
-카카오스타일 (지그재그):
-- AI 기반 체형 맞춤 스타일 추천
-- AWS AI Day 해커톤 우수 사례 선정
 
 **헬스케어: AI 진단의 현실**
 
