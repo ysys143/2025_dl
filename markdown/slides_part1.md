@@ -113,6 +113,8 @@ https://cdn.prod.website-files.com/60ab0571dc2b4b3a7165c912/67077d28fe3b63556b9b
 - 간단한 도형 분류
 - 기본적인 패턴 인식 작업
 
+https://data-science-blog.com/wp-content/uploads/2020/07/perceptron_1-1030x501.png :=big
+
 하지만 XOR 문제 같은 비선형 문제를 해결할 수 없다는 한계가 곧 드러났습니다.
 
 ---
@@ -158,6 +160,8 @@ Knowledge Graph는 뉴로심볼릭 AI의 핵심 인프라로 부상했습니다.
 
 현재 대부분의 상업적 AI 시스템(GPT, Claude, Gemini)은 여전히 순수 신경망 기반입니다. 뉴로심볼릭 기법은 특정 도메인에서 성능을 개선하는 도구로 활용되지만, AI 발전의 주류는 아닙니다. 오히려 대규모 신경망의 창발적 능력이 많은 추론 문제를 해결하고 있습니다.
 
+https://allegrograph.com/wp-content/uploads/2024/01/AG-NSAI-Graphic.png
+
 ---
 
 ### 10. 기계와의 첫 대화: ELIZA (1966)
@@ -180,6 +184,8 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 
 놀랍게도 많은 사용자들이 ELIZA와 감정적 유대감을 느꼈습니다. 이는 인간이 기계에게도 의인화된 속성을 부여한다는 중요한 통찰을 제공했습니다.
 
+https://upload.wikimedia.org/wikipedia/commons/7/79/ELIZA_conversation.png 
+
 ---
 
 ### 11. 전문가 시스템의 황금기 (1970-80년대)
@@ -200,6 +206,9 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 
 전문가 시스템은 특정 영역에서는 성공했지만, 범용 지능으로의 확장은 실패했습니다.
 
+https://media.geeksforgeeks.org/wp-content/uploads/20200319005713/1212121.png 
+
+
 ---
 
 ### 12. 첫 번째 AI 겨울 (1974-1980): 구체적인 숫자로 본 연구 중단
@@ -207,14 +216,9 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 
 1969년 Mansfield Amendment 통과로 DARPA는 "기초 연구"가 아닌 "임무 지향적 연구"만 지원하게 되었습니다. 1974년 Carnegie Mellon의 음성 인식 프로젝트가 실패하자 DARPA는 연간 300만 달러 계약을 취소했습니다.
 
-**XOR 문제의 기술적 의미:**
-```
-입력1  입력2  출력
-  0      0     0
-  0      1     1  
-  1      0     1
-  1      1     0
-```
+**XOR 문제**
+
+https://b2633864.smushcdn.com/2633864/wp-content/uploads/2021/04/bitwise_datasets-1024x365.png?lossy=2&strip=1&webp=1 
 
 단층 퍼셉트론은 선형 분리 가능한 문제만 해결 가능했습니다. XOR은 비선형 문제로, 최소 2층 이상의 네트워크가 필요했으나 당시에는 다층 네트워크 학습법이 없었습니다.
 
@@ -223,12 +227,18 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 - MIT AI Lab 예산: 1970년 300만 달러 → 1975년 100만 달러 (67% 감소)
 - 신경망 연구 논문: 1970년대 연평균 5편 미만으로 급감
 
+https://miro.medium.com/v2/resize:fit:1400/1*mWYZanOv3QUafz0nnhbEWw.png
+
+
 ---
 
 ### 13. 역전파 알고리즘의 재발견 (1986)
 **다층 신경망 학습의 돌파구**
 
 1986년, 제프리 힌튼, 데이비드 럼멜하트, 로널드 윌리엄스가 역전파(Backpropagation) 알고리즘을 재발견하고 대중화했습니다.
+
+https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/1/9/6/196c9cd7e9356e3a72293598ab775d8637412e2a.png :=big
+
 
 **역전파의 핵심:**
 - 출력층의 오류를 입력층까지 역으로 전파
@@ -242,33 +252,12 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 
 이로써 신경망 연구가 다시 활발해지며 AI의 두 번째 물결이 시작되었습니다.
 
----
+https://miro.medium.com/v2/1*f9a162GhpMbiTVTAua_lLQ.png :=big
 
-### 14. 신경망 아키텍처의 다양화
-**문제에 최적화된 구조의 탄생**
-
-역전파 알고리즘 이후, 다양한 신경망 구조가 개발되어 특정 문제를 효과적으로 해결했습니다.
-
-**주요 아키텍처들:**
-
-**RNN (Recurrent Neural Network):**
-- 시계열 데이터와 순차적 정보 처리
-- 이전 상태를 기억하는 피드백 연결
-- 음성 인식, 언어 모델링에 활용
-
-**CNN (Convolutional Neural Network):**
-- 이미지의 공간적 특징 추출
-- 컨볼루션과 풀링 연산
-- LeNet-5로 손글씨 인식 실용화 (1998)
-
-**LSTM (Long Short-Term Memory):**
-- RNN의 장기 의존성 문제 해결
-- 게이트 메커니즘으로 정보 선택적 기억
-- 기계 번역, 음성 인식의 핵심 기술
 
 ---
 
-### 15. 생물학적 영감: 네오코그니트론 (1980)
+### 14. 생물학적 영감: 네오코그니트론 (1980)
 **시각 피질을 모방한 계층적 특징 추출**
 
 쿠니히코 후쿠시마의 네오코그니트론은 고양이 시각 피질 연구에서 영감을 받아 개발되었습니다.
@@ -280,6 +269,41 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 - 변형에 강건한 패턴 인식
 
 네오코그니트론은 현대 CNN의 개념적 토대가 되었으며, 생물학적 시스템이 AI 발전에 중요한 영감을 제공한다는 것을 보여줬습니다.
+
+https://miro.medium.com/v2/resize:fit:1400/0*qq8NM5pgElCjVJBK.png :=big
+
+---
+
+### 15. 신경망 아키텍처의 다양화
+**문제에 최적화된 구조의 탄생**
+
+역전파 알고리즘 이후, 다양한 신경망 구조가 개발되어 특정 문제를 효과적으로 해결했습니다.
+
+**주요 아키텍처들:**
+
+**RNN (Recurrent Neural Network, 1986):**
+- 시계열 데이터와 순차적 정보 처리
+- 이전 상태를 기억하는 피드백 연결
+- 음성 인식, 언어 모델링에 활용
+
+https://karpathy.github.io/assets/rnn/diags.jpeg :=big
+
+
+**LSTM (Long Short-Term Memory, 1997):**
+- RNN의 장기 의존성 문제 해결
+- 게이트 메커니즘으로 정보 선택적 기억
+- 기계 번역, 음성 인식의 핵심 기술
+
+
+https://velog.velcdn.com/images/hwkims/post/20cb8966-ec15-4970-9916-128176a44180/image.png :=big
+
+**CNN (Convolutional Neural Network, late 80's):**
+- 이미지의 공간적 특징 추출
+- 컨볼루션과 풀링 연산
+- LeNet-5로 손글씨 인식 실용화 (1989)
+
+https://miro.medium.com/v2/resize:fit:3744/1*SGPGG7oeSvVlV5sOSQ2iZw.png :=big
+
 
 ---
 
@@ -312,12 +336,15 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 - 커널 트릭으로 비선형 문제 해결
 - 과적합에 강건한 성능
 
+https://bradleyboehmke.github.io/HOML/11b-svm_files/figure-html/svm-circle-1.png :=big
+
 **앙상블 방법:**
 - Random Forest: 다수의 결정 트리 조합
 - AdaBoost: 약한 학습기를 순차적으로 강화
 - Gradient Boosting: 잔차 학습으로 성능 개선
 
-이 시기의 기계학습은 "검은 상자"가 아닌 해석 가능하고 신뢰할 수 있는 모델을 추구했습니다.
+https://blog.kakaocdn.net/dna/b9en8U/btrKi8l2FXy/AAAAAAAAAAAAAAAAAAAAAAMSrsjuE7zP8yowYMdbTLYqooYOP1USh87xLvkRWp65/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1753973999&allow_ip=&allow_referer=&signature=S9tJ7vs4X7gYB3Fw8MT0xvOcKOY%3D :=big
+
 
 ---
 
@@ -330,6 +357,8 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 - PCA (주성분 분석): 선형 차원 축소
 - t-SNE: 비선형 매니폴드 학습
 - UMAP: 전역 구조 보존 시각화
+
+https://moonlight-paper-snapshot.s3.ap-northeast-2.amazonaws.com/arxiv/federated-t-sne-and-umap-for-distributed-data-visualization-4.png :=big
 
 **활용 사례:**
 - 단어 임베딩 공간 시각화
@@ -365,6 +394,8 @@ ELIZA: "아무도 당신을 이해하지 못한다는 것에 대해 더 말씀�
 
 2009년 시작된 ImageNet 프로젝트는 AI 연구 방식을 근본적으로 바꿨습니다.
 
+https://miro.medium.com/v2/resize:fit:1009/0*S4LF1ObkVh2ke-I-.jpeg :=big
+
 **ImageNet의 규모:**
 - 1,400만 개 이상의 이미지
 - 2만 개 이상의 카테고리
@@ -397,6 +428,9 @@ ImageNet은 "더 많은 데이터와 더 큰 모델"이 더 나은 성능으로 
 
 GPU의 도입으로 몇 주 걸리던 학습이 며칠로, 며칠 걸리던 것이 몇 시간으로 단축되었습니다.
 
+https://cdn.aitimes.com/news/photo/202403/158294_170234_5721.jpg
+
+
 ---
 
 ### 22. AlexNet의 충격 (2012)
@@ -417,6 +451,8 @@ GPU의 도입으로 몇 주 걸리던 학습이 며칠로, 며칠 걸리던 것�
 
 이 순간부터 딥러닝은 컴퓨터 비전뿐만 아니라 AI 전반의 주류 기술이 되었습니다.
 
+https://www.edge-ai-vision.com/wp-content/uploads/2018/07/LSVRC-winners-over-time-1024x532.png :=big
+
 ---
 
 ### 23. 구글의 고양이: 비지도 학습의 가능성
@@ -436,6 +472,9 @@ GPU의 도입으로 몇 주 걸리던 학습이 며칠로, 며칠 걸리던 것�
 
 이는 AI가 단순한 패턴 매칭을 넘어 추상적 개념을 학습할 수 있다는 가능성을 보여줬습니다.
 
+https://media.licdn.com/dms/image/v2/C4E12AQHGk_z3TAo4oA/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1556283088500?e=2147483647&v=beta&t=Ut7xfKoZLJXyz7wE8L_JBsaRd-D77-TFqCV3mB04HSs
+
+
 ---
 
 ### 24. 더 깊게, 더 크게: 신경망 구조의 진화
@@ -447,6 +486,8 @@ AlexNet 이후 신경망은 계속해서 깊어지고 커졌습니다.
 - VGGNet (2014): 19층, 균일한 3x3 컨볼루션
 - GoogLeNet (2014): 22층, Inception 모듈
 - ResNet (2015): 152층, Skip Connection으로 깊이 혁명
+
+https://media.geeksforgeeks.org/wp-content/uploads/20200424011138/ResNet.PNG :=big
 
 **깊이의 효과:**
 - 더 복잡한 특징 학습 가능
@@ -474,12 +515,18 @@ AlexNet 이후 신경망은 계속해서 깊어지고 커졌습니다.
 
 전이학습은 "바퀴를 다시 발명하지 말라"는 원칙을 AI에 적용한 것입니다.
 
+https://framerusercontent.com/images/n6FZeNKpxNGHvLDBnWU1aHvs.jpeg
+
+
+
 ---
 
 ### 26. 일상 속 AI의 침투 (2010년대)
 **우리가 인식하지 못하는 AI의 확산**
 
 2010년대 중반, AI는 이미 우리 일상 곳곳에 스며들어 있었습니다.
+
+https://miro.medium.com/v2/resize:fit:1400/1*Fm58r_RQ53sEHfwFa28LpA.png 
 
 **숨은 AI 응용들:**
 - 이메일 스팸 필터: 머신러닝 기반 분류
@@ -516,6 +563,8 @@ AI는 더 이상 미래 기술이 아닌 현재의 일상이 되었습니다.
 - 3D 비전: 깊이 추정, 3D 재구성
 
 컴퓨터 비전은 AI가 "볼 수 있는 눈"을 갖게 된 것을 의미합니다.
+
+https://i.namu.wiki/i/S2KucUG2ySKd3RNGcq-Dyzj5E7-PIBH0MQb4XtjWc0YKyvqyOLx9MP9Tg7CcknD3C2cu0Q4u2XFWESRVwYAYvw.jpg :=big
 
 ---
 
