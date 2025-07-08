@@ -387,6 +387,8 @@ https://moonlight-paper-snapshot.s3.ap-northeast-2.amazonaws.com/arxiv/federated
 
 이 빅데이터는 딥러닝이 그 잠재력을 발휘할 수 있는 토양이 되었습니다.
 
+https://cdn.prod.website-files.com/64b3ee21cac9398c75e5d3ac/66e991eb6a13dfc6f9053fda_660424f01bd5128a9fd71fa8_mlpipeline-new.webp :=big
+
 ---
 
 ### 20. ImageNet: AI 발전의 촉매제

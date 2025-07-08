@@ -53,6 +53,8 @@ AI 에이전트를 효과적으로 다루기 위해 꼭 읽어봐야 할 자료�
 
 **추천 학습 순서:** 프롬프트 엔지니어링 기초 → 에이전트 구축 가이드 → 기업 활용 사례
 
+
+
 ---
 
 ### 75. 에릭 슈미트가 말하는 AI의 미래
@@ -607,6 +609,8 @@ AI를 만든 선구자들이 오히려 가장 강력한 경고를 보내고 있�
 **제프리 힌튼 (Geoffrey Hinton) - 2024 노벨물리학상**
 "AI의 신경망 교부"로 불리는 힌튼은 구글을 떠난 후 AI 위험성을 경고하고 있습니다:
 
+https://s.france24.com/media/display/c27013a8-e8bb-11ed-88b1-005056a90284/w:1280/p:16x9/1-NEW%20YORK%20TIMES-2.jpg
+
 1. **AI의 근본적 차이점**
    - 인간: 각자 독립적으로 학습하고 지식 공유가 제한적
    - AI: 파라미터 복제로 순식간에 수천 개의 동일한 '두뇌' 생성 가능
@@ -624,6 +628,10 @@ AI를 만든 선구자들이 오히려 가장 강력한 경고를 보내고 있�
 **요슈아 벤지오 (Yoshua Bengio) - 캐나다 AI 대부**
 딥러닝의 선구자이자 현재 가장 적극적인 AI 안전 옹호자:
 
+https://pbs.twimg.com/media/EK9nUbHXUAAiQhA.jpg 
+
+https://preview.redd.it/ai-godfather-yoshua-bengio-says-it-is-an-extremely-v0-nddngoafpike1.png?width=1080&crop=smart&auto=webp&s=6cbb7f9606bbb170a8575dc2f0bf7192ebb628c3
+
 1. **가짜뉴스와 진실의 위기**
    - AI가 생성한 콘텐츠와 실제를 구분 불가능
    - 민주주의의 기반인 공론장 붕괴 위험
@@ -636,6 +644,8 @@ AI를 만든 선구자들이 오히려 가장 강력한 경고를 보내고 있�
 
 **얀 르쿤 (Yann LeCun) - Meta AI 수석**
 CNN의 아버지, 현재 LLM의 한계를 가장 명확히 지적:
+
+https://preview.redd.it/what-do-you-think-about-yann-lecuns-controversial-opinions-v0-xxmxgrdk02cc1.jpg?width=1581&format=pjpg&auto=webp&s=c12b6130f67a16ebfa19164bd289a963d6a7da0c
 
 1. **Next Token Prediction의 한계**
    - "LLM은 세계를 이해하지 못한다"
@@ -663,6 +673,9 @@ AI의 급속한 발전이 가져올 사회적 영향에 대해 다양한 전문�
 
 **대런 아제모글루 (Daron Acemoğlu) - MIT 경제학자**
 
+https://media.licdn.com/dms/image/v2/D5612AQFy6z1AXlEXIg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721186946779?e=2147483647&v=beta&t=_9CejxRkxtF1glGqL9J97biznthiHgT94J0rbz_ueUA :=big
+
+
 노벨경제학상 수상자인 아제모글루는 AI가 가져올 경제적 불평등에 대해 경고합니다:
 
 1. **"과대광고 속의 AI" (AI Hype)**
@@ -682,7 +695,10 @@ AI의 급속한 발전이 가져올 사회적 영향에 대해 다양한 전문�
 
 **케이트 크로퍼드 (Kate Crawford) - AI Now Institute**
 
-『Atlas of AI』 저자 크로퍼드는 AI의 숨겨진 비용을 폭로합니다:
+https://www.kw-berlin.de/files/CE-15.jpg :=big
+https://www.kw-berlin.de/en/poetics-of-encryption-conversation-kate-crawford/
+
+『AI 지도책』 저자 크로퍼드는 AI의 숨겨진 비용을 폭로합니다:
 
 1. **AI의 물질적 현실**
    - 막대한 에너지 소비와 환경 파괴
@@ -872,29 +888,7 @@ AI 시대를 살아가는 우리에게 가장 중요한 것은 기술적 역량�
 
 **위데이터랩의 비전:**
 
-우리는 이 철학적 질문에 대한 답을 찾기보다는, AI 기술을 통해 실질적인 가치를 창출하는 데 집중합니다:
-
 1. **실용적 AI**: 당장 쓸 수 있는 솔루션
 2. **신뢰할 수 있는 AI**: 관찰 가능하고 제어 가능한 시스템
 3. **함께하는 AI**: 인간과 AI의 시너지
 4. **지속가능한 AI**: 윤리적이고 책임감 있는 개발
-
-**2025년 현재의 답변:**
-
-튜링의 질문에 대한 답은 기술적 관점에서 점점 명확해지고 있습니다. GPT-4는 미국 변호사 시험 상위 10%, o1은 국제 수학 올림피아드 문제의 83%를 해결합니다. 
-
-그러나 '생각'의 정의는 여전히 철학적 논쟁의 영역입니다. 현재 AI는:
-- 패턴 인식과 생성에서 인간을 능가
-- 특정 도메인에서 전문가 수준의 추론
-- 하지만 의식(consciousness)의 증거는 없음
-
-**위데이터랩의 접근:**
-
-우리는 AI의 실용적 가치에 집중합니다:
-- DB 모니터링 자동화로 운영 비용 70% 절감
-- RAG 시스템으로 정보 검색 정확도 95% 달성
-- YOLO 기반 결함 탐지로 품질 관리 시간 80% 단축
-
-기술의 본질은 문제 해결입니다. AI가 '생각'하는지보다 중요한 것은, AI가 실제 문제를 얼마나 잘 해결하는가입니다.
-
-감사합니다.
