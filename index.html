@@ -300,5 +300,95 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        // 랜딩페이지에서 Phase I로 이동하는 스크롤 이벤트
+        (function() {
+            let hasTriggeredNext = false;
+            let isAtBottom = false;
+            
+            function checkScrollPosition() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 5;
+                
+                // 페이지 끝에 도달
+                if (scrolledToBottom && !hasTriggeredNext) {
+                    isAtBottom = true;
+                    // 페이지 끝에 도달했을 때 안내 메시지 표시
+                    if (!document.getElementById('scrollHintBottom')) {
+                        const hint = document.createElement('div');
+                        hint.id = 'scrollHintBottom';
+                        hint.style.cssText = 'position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0, 100, 255, 0.9); color: white; padding: 16px 32px; border-radius: 50px; font-weight: 600; z-index: 1000; transition: opacity 0.3s ease;';
+                        hint.textContent = '계속 스크롤하여 Phase I 시작하기';
+                        document.body.appendChild(hint);
+                        
+                        setTimeout(() => {
+                            hint.style.opacity = '0';
+                            setTimeout(() => hint.remove(), 300);
+                        }, 3000);
+                    }
+                } else if (!scrolledToBottom) {
+                    isAtBottom = false;
+                    hasTriggeredNext = false;
+                }
+            }
+            
+            // 휠 이벤트로 페이지 끝에서 추가 스크롤 감지
+            window.addEventListener('wheel', function(e) {
+                // 아래로 스크롤 - Phase I로 이동
+                if (isAtBottom && e.deltaY > 0 && !hasTriggeredNext) {
+                    hasTriggeredNext = true;
+                    setTimeout(() => {
+                        window.location.href = 'html/slides_part1_continuous.html';
+                    }, 300);
+                }
+            });
+            
+            // 모바일 터치 이벤트 지원
+            let touchStartY = 0;
+            let touchEndY = 0;
+            let touchStartTime = 0;
+            let isScrolling = false;
+            
+            window.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+                touchStartTime = Date.now();
+                isScrolling = false;
+            }, { passive: true });
+            
+            window.addEventListener('touchmove', function(e) {
+                isScrolling = true;
+            }, { passive: true });
+            
+            window.addEventListener('touchend', function(e) {
+                if (!isScrolling) return;
+                
+                touchEndY = e.changedTouches[0].clientY;
+                const touchDuration = Date.now() - touchStartTime;
+                const touchDistance = Math.abs(touchEndY - touchStartY);
+                const touchVelocity = touchDistance / touchDuration;
+                
+                // 빠른 스와이프 감지 (최소 50px 이동, 최대 500ms 시간, 최소 0.1 속도)
+                if (touchDistance > 50 && touchDuration < 500 && touchVelocity > 0.1) {
+                    const swipeDirection = touchStartY > touchEndY ? 'down' : 'up';
+                    
+                    // 아래로 스와이프 - Phase I로 이동
+                    if (swipeDirection === 'down' && isAtBottom && !hasTriggeredNext) {
+                        hasTriggeredNext = true;
+                        setTimeout(() => {
+                            window.location.href = 'html/slides_part1_continuous.html';
+                        }, 300);
+                    }
+                }
+            }, { passive: true });
+            
+            window.addEventListener('scroll', checkScrollPosition);
+            
+            // 초기 체크
+            checkScrollPosition();
+        })();
+    </script>
 </body>
 </html> 
