@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI의 진화: 기계는 생각할 수 있는가?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow-x: hidden;
+        }
+        
+        /* Layout */
+        .main-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+        
+        .content-wrapper {
+            max-width: 1024px;
+            width: 100%;
+            padding: 32px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 33px;
+            right: 24px;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .nav-button {
+            background: transparent;
+            color: #000;
+            border: 1px solid #000;
+            border-radius: 0.125rem;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: auto;
+            box-shadow: none;
+            opacity: 0.6;
+            text-decoration: none;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 0, 0, 0.05);
+            opacity: 1.0;
+        }
+        
+        /* Landing Slide */
+        .landing-slide {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 120, 120, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(160, 160, 160, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(200, 200, 200, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #f0f0f2 0%, #e8e8ea 25%, #d8d8da 50%, #c8c8ca 75%, #b8b8ba 100%);
+            color: #fff;
+            text-align: center;
+            padding: 80px 48px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 
+                0 32px 64px rgba(0, 0, 0, 0.08),
+                0 16px 32px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        
+        .landing-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 70%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .landing-slide::after {
+            content: 'AI의 진화: 기계는 생각할 수 있는가?';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 120px;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.08);
+            word-wrap: break-word;
+            overflow: hidden;
+            line-height: 1.4;
+            letter-spacing: 0.1em;
+            filter: blur(2px);
+            pointer-events: none;
+            animation: text-flow 50s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes text-flow {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
+        }
+        
+        .landing-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+        
+        .main-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1.1;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .company-info {
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .qr-code:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+        
+        .qr-text {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+        
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .nav-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .nav-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .nav-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .nav-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .company-info {
+                font-size: 1rem;
+            }
+            
+            .navigation-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .landing-slide {
+                padding: 40px 20px;
+            }
+            
+            .qr-code {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- Navigation -->
+            <div class="nav-container">
+                <a href="html/slides_part1_continuous.html" class="nav-button">Phase I</a>
+                <a href="html/slides_part2_continuous.html" class="nav-button">Phase II</a>
+                <a href="html/slides_part3_continuous.html" class="nav-button">Phase III</a>
+            </div>
+
+            <!-- Landing Slide -->
+            <div class="landing-slide">
+                <div class="landing-content">
+                    <h1 class="main-title">AI의 진화</h1>
+                    <p class="subtitle">기계는 생각할 수 있는가?</p>
+                    <p class="company-info">위데이터랩 인공지능 트렌드 강연</p>
+                    
+                    <div class="qr-section">
+                        <a href="https://ysys143.github.io/2025_dl/html/slides_part1_continuous.html" target="_blank">
+                            <img src="asset/qrcode.png" alt="QR Code - Phase I 시작하기" class="qr-code">
+                        </a>
+                        <p class="qr-text">QR코드를 스캔하여 Phase I 시작하기</p>
+                    </div>
+                    
+                    <div class="navigation-grid">
+                        <a href="html/slides_part1_continuous.html" class="nav-card">
+                            <h3>Phase I</h3>
+                            <p>AI의 기원과 진화</p>
+                        </a>
+                        
+                        <a href="html/slides_part2_continuous.html" class="nav-card">
+                            <h3>Phase II</h3>
+                            <p>자연어처리 혁명</p>
+                        </a>
+                        
+                        <a href="html/slides_part3_continuous.html" class="nav-card">
+                            <h3>Phase III</h3>
+                            <p>Agentic AI의 미래</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
