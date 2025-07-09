@@ -1380,12 +1380,12 @@ Claude: &quot;죄송하지만 안전상의 이유로 그런 정보는 제공할 
 <span style="color: #F8F8F2">print(response</span><span style="color: #FF4689">.</span><span style="color: #F8F8F2">choices[</span><span style="color: #AE81FF">0</span><span style="color: #F8F8F2">]</span><span style="color: #FF4689">.</span><span style="color: #F8F8F2">message</span><span style="color: #FF4689">.</span><span style="color: #F8F8F2">content)</span>
 </pre></div>
 </div><br />
-<strong>성공적인 통합 사례</strong>:<br />
+<strong>서비스 적용 사례</strong>:<br />
 - Duolingo: AI 언어 교사<br />
 - 퍼플렉시티: AI 검색 엔진<br />
 - 뤼튼: AI 콘텐츠 생성 플랫폼</p>
 
-<p><em>퍼플렉시티, 뤼튼, Duolingo는 모두 API Wrapper 형태로 구현되어, 기존 LLM API를 자신들의 서비스에 특화된 형태로 재포장한 사례들입니다.</em></p>
+<p><em>퍼플렉시티, 뤼튼, Duolingo 등 많은 서비스는 자체적으로 LLM을 개발한 것이 아니라, 기존 LLM API를 자신들의 서비스에 특화된 형태로 재포장한 사례들입니다.</em></p>
 
             
             <div class="page-info">
@@ -1449,10 +1449,9 @@ Claude: &quot;죄송하지만 안전상의 이유로 그런 정보는 제공할 
 - 조사의 다양성: 은/는, 이/가, 을/를</p>
 
 <p><strong>최신 한국어 AI 모델</strong>:<br />
-- <strong>네이버 Clova-X</strong>: 한국어 특화 초거대 언어모델 (2024)<br />
-- <strong>LG AI Research Exaone 3.0</strong>: 다국어 지원 한국형 AI (2024)<br />
-- <strong>KT 믿음 2.0</strong>: 한국어 대화형 AI 어시스턴트 (2025)<br />
-- <strong>SKT A.X 4.0</strong>: 멀티모달 한국어 AI 플랫폼 (2025)</p>
+- <strong>네이버 HyperCLOVA X</strong><br />
+- <strong>LG AI Research EXAONE 3.0</strong><br />
+- <strong>KT A.</strong></p>
 
 <p><strong>한국어 AI 성능 평가</strong>:<br />
 - <strong>호랑이 리더보드</strong><br />
@@ -1619,10 +1618,13 @@ Claude: &quot;죄송하지만 안전상의 이유로 그런 정보는 제공할 
 <p><strong>제목</strong>: 코딩 몰라도 AI 쓸 수 있다</p>
 
 <p><strong>대표적인 도구들</strong>:<br />
-- ChatGPT: 범용 대화형 AI<br />
-- Jasper: 마케팅 콘텐츠 생성<br />
-- Copy.ai: 카피라이팅 특화<br />
-- 뤼튼: 한국어 특화 AI</p>
+- <strong>ChatGPT</strong>: 범용 AI 챗봇, 텍스트/이미지/음성 대화, 딥리서치<br />
+- <strong>Gemini</strong>: 구글의 멀티모달 AI, 높은 안전성과 긴 문서 분석 특화<br />
+- <strong>Claude</strong>: Anthropic의 최신 AI 서비스, 코딩 능력과 도구 사용에 장점<br />
+- <strong>Perplexity</strong>: AI 기반 검색 엔진, 실시간 정보 검색 및 요약<br />
+- <strong>Suno</strong>: AI 음악 생성 플랫폼, 가사와 멜로디 자동 생성<br />
+- <strong>Genspark</strong>: AI 검색 엔진, 맞춤형 정보 페이지 생성<br />
+- <strong>Make/Zapier</strong>: 워크플로우 자동화 플랫폼, 서비스 간 연결</p>
 
 <p><strong>업무 자동화 사례</strong>:<br />
 - 이메일 초안 작성: 5분 → 30초<br />
@@ -1972,11 +1974,6 @@ Claude: &quot;죄송하지만 안전상의 이유로 그런 정보는 제공할 
 <li>2-3배 속도 향상</li>
 </ul></li>
 </ol>
-
-<p><strong>구체적 성과 사례</strong>:<br />
-- A사: Redis 캐싱으로 월 클라우드 비용 $50K → $5K<br />
-- B사: KV Cache 최적화로 응답 시간 5초 → 1초<br />
-- C사: Batch 처리로 시간당 처리량 1만 → 5만 요청</p>
 
 <p><strong>구현 시 주의사항</strong>:<br />
 - 캐시 무효화 전략 필수<br />
@@ -3557,52 +3554,6 @@ AlphaEvolve와 같은 시스템은 인간의 개입 없이도<br />
                     }, 300);
                 }
             });
-            
-            // 모바일 터치 이벤트 지원
-            let touchStartY = 0;
-            let touchEndY = 0;
-            let touchStartTime = 0;
-            let isScrolling = false;
-            
-            window.addEventListener('touchstart', function(e) {
-                touchStartY = e.touches[0].clientY;
-                touchStartTime = Date.now();
-                isScrolling = false;
-            }, { passive: true });
-            
-            window.addEventListener('touchmove', function(e) {
-                isScrolling = true;
-            }, { passive: true });
-            
-            window.addEventListener('touchend', function(e) {
-                if (!isScrolling) return;
-                
-                touchEndY = e.changedTouches[0].clientY;
-                const touchDuration = Date.now() - touchStartTime;
-                const touchDistance = Math.abs(touchEndY - touchStartY);
-                const touchVelocity = touchDistance / touchDuration;
-                
-                // 빠른 스와이프 감지 (최소 50px 이동, 최대 500ms 시간, 최소 0.1 속도)
-                if (touchDistance > 50 && touchDuration < 500 && touchVelocity > 0.1) {
-                    const swipeDirection = touchStartY > touchEndY ? 'down' : 'up';
-                    
-                    // 아래로 스와이프 - 다음 파트로 이동
-                    if (swipeDirection === 'down' && isAtBottom && !hasTriggeredNext && 'slides_part3_continuous.html' && 'slides_part3_continuous.html' !== 'None') {
-                        hasTriggeredNext = true;
-                        setTimeout(() => {
-                            window.location.href = 'slides_part3_continuous.html';
-                        }, 300);
-                    }
-                    
-                    // 위로 스와이프 - 이전 파트로 이동
-                    if (swipeDirection === 'up' && isAtTop && !hasTriggeredPrev && 'slides_part1_continuous.html' && 'slides_part1_continuous.html' !== 'None') {
-                        hasTriggeredPrev = true;
-                        setTimeout(() => {
-                            window.location.href = 'slides_part1_continuous.html#scroll-to-bottom';
-                        }, 300);
-                    }
-                }
-            }, { passive: true });
             
             window.addEventListener('scroll', checkScrollPosition);
             
