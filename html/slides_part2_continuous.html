@@ -3558,6 +3558,52 @@ AlphaEvolve와 같은 시스템은 인간의 개입 없이도<br />
                 }
             });
             
+            // 모바일 터치 이벤트 지원
+            let touchStartY = 0;
+            let touchEndY = 0;
+            let touchStartTime = 0;
+            let isScrolling = false;
+            
+            window.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+                touchStartTime = Date.now();
+                isScrolling = false;
+            }, { passive: true });
+            
+            window.addEventListener('touchmove', function(e) {
+                isScrolling = true;
+            }, { passive: true });
+            
+            window.addEventListener('touchend', function(e) {
+                if (!isScrolling) return;
+                
+                touchEndY = e.changedTouches[0].clientY;
+                const touchDuration = Date.now() - touchStartTime;
+                const touchDistance = Math.abs(touchEndY - touchStartY);
+                const touchVelocity = touchDistance / touchDuration;
+                
+                // 빠른 스와이프 감지 (최소 50px 이동, 최대 500ms 시간, 최소 0.1 속도)
+                if (touchDistance > 50 && touchDuration < 500 && touchVelocity > 0.1) {
+                    const swipeDirection = touchStartY > touchEndY ? 'down' : 'up';
+                    
+                    // 아래로 스와이프 - 다음 파트로 이동
+                    if (swipeDirection === 'down' && isAtBottom && !hasTriggeredNext && 'slides_part3_continuous.html' && 'slides_part3_continuous.html' !== 'None') {
+                        hasTriggeredNext = true;
+                        setTimeout(() => {
+                            window.location.href = 'slides_part3_continuous.html';
+                        }, 300);
+                    }
+                    
+                    // 위로 스와이프 - 이전 파트로 이동
+                    if (swipeDirection === 'up' && isAtTop && !hasTriggeredPrev && 'slides_part1_continuous.html' && 'slides_part1_continuous.html' !== 'None') {
+                        hasTriggeredPrev = true;
+                        setTimeout(() => {
+                            window.location.href = 'slides_part1_continuous.html#scroll-to-bottom';
+                        }, 300);
+                    }
+                }
+            }, { passive: true });
+            
             window.addEventListener('scroll', checkScrollPosition);
             
             // URL에 #scroll-to-bottom이 있으면 페이지 맨 아래로 스크롤
